@@ -1,0 +1,4 @@
+### Send POST request with json body
+POST https://localhost:7219/api/v1.0/CacheManager/reset
+Content-Type: application/json
+

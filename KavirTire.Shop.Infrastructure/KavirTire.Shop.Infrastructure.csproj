@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\KavirTire.Shop.Application\KavirTire.Shop.Application.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Connected Services\" />
+    <Folder Include="Persistence\Migrations" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="EasyCaching.Extensions.EasyCompressor" Version="1.4.0" />
+    <PackageReference Include="EasyCaching.InMemory" Version="1.9.0" />
+    <PackageReference Include="EasyCaching.Redis" Version="1.9.0" />
+    <PackageReference Include="EasyCaching.Serialization.Json" Version="1.9.0" />
+    <PackageReference Include="EasyCaching.Serialization.MessagePack" Version="1.9.0" />
+    <PackageReference Include="EasyCaching.Serialization.Protobuf" Version="1.9.0" />
+    <PackageReference Include="EasyCaching.Serialization.SystemTextJson" Version="1.9.0" />
+    <PackageReference Include="EasyCompressor.LZ4" Version="1.4.0" />
+    <PackageReference Include="EFCoreSecondLevelCacheInterceptor" Version="3.8.6" />
+    <PackageReference Include="Hangfire.AspNetCore" Version="1.7.34" />
+    <PackageReference Include="Hangfire.Core" Version="1.7.34" />
+    <PackageReference Include="Hangfire.SqlServer" Version="1.7.34" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="7.0.4" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="7.0.4" />
+    <PackageReference Include="RedLock.net" Version="2.3.2" />
+    <PackageReference Include="Scrutor" Version="4.2.2" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="System.ServiceModel.Duplex" Version="4.8.*" />
+    <PackageReference Include="System.ServiceModel.Http" Version="4.8.*" />
+    <PackageReference Include="System.ServiceModel.NetTcp" Version="4.8.*" />
+    <PackageReference Include="System.ServiceModel.Security" Version="4.8.*" />
+  </ItemGroup>
+</Project>

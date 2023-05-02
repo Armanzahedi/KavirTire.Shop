@@ -1,0 +1,399 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<root>
+    <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+        <xsd:element name="root" msdata:IsDataSet="true">
+
+        </xsd:element>
+    </xsd:schema>
+    <resheader name="resmimetype">
+        <value>text/microsoft-resx</value>
+    </resheader>
+    <resheader name="version">
+        <value>1.3</value>
+    </resheader>
+    <resheader name="reader">
+        <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral,
+            PublicKeyToken=b77a5c561934e089
+        </value>
+    </resheader>
+    <resheader name="writer">
+        <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral,
+            PublicKeyToken=b77a5c561934e089
+        </value>
+    </resheader>
+    <data name="ActivityParty_PartyId" xml:space="preserve">
+        <value>partyid</value>
+    </data>
+    <data name="Contact" xml:space="preserve">
+    <value>contact</value>
+  </data>
+    <data name="Contact_FirstName" xml:space="preserve">
+    <value>firstname</value>
+  </data>
+    <data name="Contact_Id" xml:space="preserve">
+    <value>contactid</value>
+  </data>
+    <data name="Contact_LastName" xml:space="preserve">
+    <value>lastname</value>
+  </data>
+    <data name="Contact_MobilePhone" xml:space="preserve">
+    <value>mobilephone</value>
+  </data>
+    <data name="Contact_PostalAddress" xml:space="preserve">
+    <value>bmsd_postaladdressbase</value>
+  </data>
+    <data name="Contact_NationalId" xml:space="preserve">
+    <value>bmsd_nationalidbase</value>
+  </data>
+    <data name="Contact_PostalCode" xml:space="preserve">
+    <value>address1_postalcode</value>
+  </data>
+    <data name="BankAccount_BankName" xml:space="preserve">
+    <value>bmsd_bankname</value>
+  </data>
+    <data name="BankAccount_Iban" xml:space="preserve">
+    <value>bmsd_iban</value>
+  </data>
+    <data name="BankAccount_Ipg" xml:space="preserve">
+    <value>bmsd_ipgid</value>
+  </data>
+    <data name="BankAccount_IsPost" xml:space="preserve">
+    <value>bmsd_ispost</value>
+  </data>
+    <data name="BankAccount_LogicalName" xml:space="preserve">
+    <value>bmsd_kv_bankaccountcard</value>
+  </data>
+    <data name="BankAccount_SequenceNumber" xml:space="preserve">
+    <value>bmsd_sequencenumber</value>
+  </data>
+    <data name="BankAccount_WebFile" xml:space="preserve">
+    <value>bmsd_webfileid</value>
+  </data>
+    <data name="BankAccount_Id" xml:space="preserve">
+    <value>bmsd_kv_bankaccountcardid</value>
+  </data>
+    <data name="BankAccount" xml:space="preserve">
+    <value>bmsd_kv_bankaccountcard</value>
+  </data>
+    <data name="VehicleType" xml:space="preserve">
+    <value>bmsd_vehicletype</value>
+  </data>
+    <data name="VehicleType_Id" xml:space="preserve">
+    <value>bmsd_vehicletypeid</value>
+  </data>
+    <data name="VehicleType_Name" xml:space="preserve">
+    <value>bmsd_name</value>
+  </data>
+    <data name="VehicleTypeProduct" xml:space="preserve">
+    <value>bmsd_kv_vehicletypeproduct</value>
+    </data>
+    <data name="VehicleTypeProduct_Id" xml:space="preserve">
+    <value>bmsd_kv_vehicletypeproductid</value>
+    </data>
+    <data name="VehicleTypeProduct_Type" xml:space="preserve">
+    <value>bmsd_type</value>
+    </data>
+    <data name="VehicleTypeProduct_VehicleType" xml:space="preserve">
+    <value>bmsd_vehicletype</value>
+    </data>
+    <data name="VehicleTypeProduct_Product" xml:space="preserve">
+    <value>bmsd_product</value>
+    </data>
+    <data name="Entity_Status" xml:space="preserve">
+    <value>statecode</value>
+  </data>
+    <data name="Entity_StatusReason" xml:space="preserve">
+    <value>statuscode</value>
+  </data>
+    <data name="PriceList" xml:space="preserve">
+    <value>pricelevel</value>
+  </data>
+    <data name="PriceList_Id" xml:space="preserve">
+    <value>pricelevelid</value>
+  </data>
+    <data name="PriceListItem" xml:space="preserve">
+    <value>productpricelevel</value>
+  </data>
+    <data name="PriceListItem_Id" xml:space="preserve">
+    <value>productpricelevelid</value>
+  </data>
+    <data name="PriceListItem_Amount" xml:space="preserve">
+    <value>amount</value>
+  </data>
+    <data name="PriceListItem_ProductId" xml:space="preserve">
+    <value>productid</value>
+  </data>
+    <data name="PriceListItem_PriceListId" xml:space="preserve">
+    <value>pricelevelid</value>
+  </data>
+    <data name="PriceList_Name" xml:space="preserve">
+    <value>name</value>
+  </data>
+    <data name="GeneralPolicy" xml:space="preserve">
+    <value>bmsd_generalpolicy</value>
+  </data>
+    <data name="GeneralPolicy_Id" xml:space="preserve">
+    <value>bmsd_generalpolicyid</value>
+  </data>
+    <data name="GeneralPolicy_MaximumNumberOfPurchases" xml:space="preserve">
+    <value>bmsd_maximumnumberofpurchases</value>
+  </data>
+    <data name="GeneralPolicy_PurchaseIntervalInDays" xml:space="preserve">
+    <value>bmsd_purchaseintervalday</value>
+  </data>
+    <data name="GeneralPolicy_NumberOfPurchaseItems" xml:space="preserve">
+    <value>bmsd_numberofpurchaseitems</value>
+  </data>
+    <data name="GeneralPolicy_ShowProductsOnlyRelatedToCustomerCar" xml:space="preserve">
+    <value>bmsd_showprdonlyreltocar</value>
+  </data>
+    <data name="GeneralPolicy_ApplyMaximumNumberOfPurchases" xml:space="preserve">
+    <value>bmsd_applymaximumnumberofpurchases</value>
+  </data>
+    <data name="GeneralPolicy_ApplyPurchaseIntervalInDays" xml:space="preserve">
+    <value>bmsd_applypurchaseintervalday</value>
+  </data>
+    <data name="GeneralPolicy_ApplyNumberOfPurchaseItems" xml:space="preserve">
+    <value>bmsd_applynumberofpurchaseitems</value>
+  </data>
+    <data name="GeneralPolicy_PriceList" xml:space="preserve">
+    <value>bmsd_pricelistid</value>
+  </data>
+    <data name="Location" xml:space="preserve">
+    <value>bmsd_locationbase</value>
+  </data>
+    <data name="Location_Id" xml:space="preserve">
+    <value>bmsd_locationbaseid</value>
+  </data>
+    <data name="Location_Name" xml:space="preserve">
+    <value>bmsd_name</value>
+  </data>
+    <data name="Location_PostCostCategory" xml:space="preserve">
+    <value>bmsd_postcostcategory</value>
+  </data>
+    <data name="Location_ParentLocation" xml:space="preserve">
+    <value>bmsd_parentlocationbase</value>
+  </data>
+    <data name="Product" xml:space="preserve">
+    <value>product</value>
+  </data>
+    <data name="Product_Id" xml:space="preserve">
+    <value>productid</value>
+  </data>
+    <data name="Product_Name" xml:space="preserve">
+    <value>name</value>
+  </data>
+    <data name="Product_FirstImage" xml:space="preserve">
+    <value>bmsd_firstimageid</value>
+  </data>
+    <data name="ProductImage" xml:space="preserve">
+    <value>bmsd_productimage</value>
+  </data>
+    <data name="ProductImage_Id" xml:space="preserve">
+    <value>bmsd_productimageid</value>
+  </data>
+    <data name="ProductImage_Product" xml:space="preserve">
+    <value>bmsd_productid</value>
+  </data>
+    <data name="ProductImage_WebFile" xml:space="preserve">
+    <value>bmsd_webfileid</value>
+  </data>
+    <data name="WebFile" xml:space="preserve">
+    <value>adx_webfile</value>
+  </data>
+    <data name="WebFile_Id" xml:space="preserve">
+    <value>adx_webfileid</value>
+  </data>
+    <data name="Note" xml:space="preserve">
+    <value>annotation</value>
+  </data>
+    <data name="Note_Id" xml:space="preserve">
+    <value>annotationid</value>
+  </data>
+    <data name="Note_DocumentBody" xml:space="preserve">
+    <value>documentbody</value>
+  </data>
+    <data name="Note_DocumentMimeType" xml:space="preserve">
+    <value>mimetype</value>
+  </data>
+    <data name="Note_Object" xml:space="preserve">
+    <value>objectid</value>
+  </data>
+    <data name="WebFile_PartialUrl" xml:space="preserve">
+    <value>adx_partialurl</value>
+  </data>
+    <data name="InventoryItem" xml:space="preserve">
+    <value>bmsd_kv_inventoryitem</value>
+  </data>
+    <data name="InventoryItem_Id" xml:space="preserve">
+    <value>bmsd_kv_inventoryitemid</value>
+  </data>
+    <data name="InventoryItem_ProductId" xml:space="preserve">
+    <value>bmsd_kv_product</value>
+  </data>
+
+    <data name="InventoryItem_InventoryForSale" xml:space="preserve">
+    <value>bmsd_kv_inventoryforsale</value>
+  </data>
+    <data name="InventoryItem_ReservedInventory" xml:space="preserve">
+    <value>bmsd_kv_reservedinventory</value>
+  </data>
+    <data name="InventoryItem_Warehouse" xml:space="preserve">
+    <value>bmsd_kv_warehouse</value>
+  </data>
+    <data name="PostCostCategory" xml:space="preserve">
+    <value>bmsd_postcostcategory</value>
+  </data>
+    <data name="PostCostCategory_Id" xml:space="preserve">
+    <value>bmsd_postcostcategoryid</value>
+  </data>
+    <data name="PostCostCategory_Name" xml:space="preserve">
+    <value>bmsd_name</value>
+  </data>
+    <data name="PostCostCategory_TirePostCost" xml:space="preserve">
+    <value>bmsd_tirepostcost</value>
+  </data>
+    <data name="Vehicle" xml:space="preserve">
+    <value>bmsd_vehicle</value>
+  </data>
+    <data name="Vehicle_Id" xml:space="preserve">
+    <value>bmsd_vehicleid</value>
+  </data>
+    <data name="Vehicle_VehicleType" xml:space="preserve">
+    <value>bmsd_vehicletype</value>
+  </data>
+    <data name="Vehicle_Customer" xml:space="preserve">
+    <value>bmsd_custmer</value>
+  </data>
+    <data name="Vehicle_VehicleRegistrationNumberLeft" xml:space="preserve">
+    <value>bmsd_vehicleregnol</value>
+  </data>
+    <data name="Vehicle_VehicleRegistrationNumberMiddle" xml:space="preserve">
+    <value>bmsd_vehicleregnom</value>
+  </data>
+    <data name="Vehicle_VehicleRegistrationNumberRight" xml:space="preserve">
+    <value>bmsd_vehicleregnor</value>
+  </data>
+    <data name="Vehicle_VehicleRegistrationCharacter" xml:space="preserve">
+    <value>bmsd_vehicleregchar</value>
+  </data>
+    <data name="Contact_Province" xml:space="preserve">
+    <value>bmsd_provincebase</value>
+  </data>
+    <data name="Contact_ConfirmPurchaseHistory" xml:space="preserve">
+    <value>bmsd_confirmpurchasehistory</value>
+  </data>
+    <data name="PersonalDoc" xml:space="preserve">
+    <value>bmsd_personaldoc</value>
+  </data>
+    <data name="PersonalDoc_Contact" xml:space="preserve">
+    <value>bmsd_contact</value>
+  </data>
+    <data name="Order" xml:space="preserve">
+    <value>salesorder</value>
+  </data>
+    <data name="Order_Id" xml:space="preserve">
+    <value>salesorderid</value>
+  </data>
+    <data name="Order_RegistrationDate" xml:space="preserve">
+    <value>bmsd_registrationdate</value>
+  </data>
+    <data name="Order_TotalQuantity" xml:space="preserve">
+    <value>bmsd_totalquantity</value>
+  </data>
+    <data name="Order_Customer" xml:space="preserve">
+    <value>customerid</value>
+  </data>
+    <data name="WebPage" xml:space="preserve">
+    <value>adx_webpage</value>
+  </data>
+    <data name="WebPage_Id" xml:space="preserve">
+    <value>adx_webpageid</value>
+  </data>
+    <data name="WebPage_PartialUrl" xml:space="preserve">
+    <value>adx_partialurl</value>
+  </data>
+    <data name="WebPage_CopyHtml" xml:space="preserve">
+    <value>adx_copy</value>
+  </data>
+    <data name="WebPage_WebPageLanguage" xml:space="preserve">
+    <value>adx_webpagelanguageid</value>
+  </data>
+    <data name="WebsiteLanguage" xml:space="preserve">
+    <value>adx_websitelanguage</value>
+  </data>
+    <data name="WebsiteLanguage_Id" xml:space="preserve">
+    <value>adx_websitelanguageid</value>
+  </data>
+    <data name="WebsiteLanguage_PortalLanguage" xml:space="preserve">
+    <value>adx_portallanguageid</value>
+  </data>
+    <data name="PortalLanguage" xml:space="preserve">
+    <value>adx_portallanguage</value>
+  </data>
+    <data name="PortalLanguage_Id" xml:space="preserve">
+    <value>adx_portallanguageid</value>
+  </data>
+    <data name="PortalLanguage_LCID" xml:space="preserve">
+    <value>adx_lcid</value>
+  </data>
+  <data name="Ipg" xml:space="preserve">
+    <value>bmsd_kv_ipg</value>
+  </data>
+  <data name="Ipg_Name" xml:space="preserve">
+    <value>bmsd_name</value>
+  </data>
+  <data name="Ipg_Password" xml:space="preserve">
+    <value>bmsd_password</value>
+  </data>
+  <data name="Ipg_PostBankAccount" xml:space="preserve">
+    <value>bmsd_postbankaccountid</value>
+  </data>
+  <data name="Ipg_ReturnUrl" xml:space="preserve">
+    <value>bmsd_returnurl</value>
+  </data>
+  <data name="Ipg_SequenceNumber" xml:space="preserve">
+    <value>bmsd_sequencenumber</value>
+  </data>
+  <data name="Ipg_TerminalId" xml:space="preserve">
+    <value>bmsd_terminalid</value>
+  </data>
+  <data name="Ipg_AcceptorId" xml:space="preserve">
+    <value>bmsd_acceptorid</value>
+  </data>
+  <data name="Ipg_Bank" xml:space="preserve">
+    <value>bmsd_banks</value>
+  </data>
+  <data name="Ipg_Id" xml:space="preserve">
+    <value>bmsd_kv_ipgid</value>
+  </data>
+  <data name="Ipg_PassPhrase" xml:space="preserve">
+    <value>bmsd_passphrase</value>
+  </data>
+  <data name="Ipg_RSAKeyValue" xml:space="preserve">
+    <value>bmsd_rsakeyvalue</value>
+  </data>
+  <data name="Ipg_FinishStopHour" xml:space="preserve">
+    <value>bmsd_finishstophour</value>
+  </data>
+  <data name="Ipg_FinishStopMin" xml:space="preserve">
+    <value>bmsd_finishstopmin</value>
+  </data>
+  <data name="Ipg_StartStopHour" xml:space="preserve">
+    <value>bmsd_startstophour</value>
+  </data>
+  <data name="Ipg_StartStopMin" xml:space="preserve">
+    <value>bmsd_startstopmin</value>
+  </data>
+  <data name="BankAccount_Name" xml:space="preserve">
+    <value>bmsd_name</value>
+  </data>
+  <data name="GeneralPolicy_ExpireQuoteForActionMin" xml:space="preserve">
+    <value>bmsd_expirequoteforactionmin</value>
+  </data>
+  <data name="GeneralPolicy_ExpireQuoteForCookieMin" xml:space="preserve">
+    <value>bmsd_expireqouteforcookymin</value>
+  </data>
+</root>

@@ -1,0 +1,286 @@
+﻿@using Microsoft.AspNetCore.Mvc.TagHelpers
+@model KavirTire.Shop.Application.Invoices.Queries.GetInvoiceDetails.GetInvoiceDetailsQueryResult
+
+@{
+    ViewBag.Title = "ثبت سفارش";
+}
+
+<form action="/Payment" method="post">
+<input type="hidden" name="InvoiceId" value="@Model.Invoice.Id"/>
+<section id="kk-final-cart-form">
+<div class="kk-af-section row zf-no-padding row-flex">
+    <div class="col-lg-12 col-md-12 col-xs-12">
+        <div class="idn-info-descript content">
+            <div class="col-lg-4 col-md-4 col-xs-12 ">
+                <span class="label-info-checkout">
+                    <img class="img-responsive" src="/assets/icons/icon_user.png">
+                    <span>اطلاعات کاربری</span>
+                </span>
+                <div class="row">
+                    <div class="col-md-4 col-xs-6">
+                        <span class="kk-label">نام و نام ‌خانوادگی</span>
+                    </div>
+                    <div class="col-md-8 col-xs-6">
+                        <div class="kk-info">@Model.Invoice.CustomerName</div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4 col-xs-6">
+                        <span class="kk-label">کد ملی</span>
+                    </div>
+                    <div class="col-md-8 col-xs-6">
+                        <div class="kk-info">@Model.Invoice.NationalId</div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4 col-xs-6">
+                        <span class="kk-label">موبایل</span>
+                    </div>
+                    <div class="col-md-8 col-xs-6">
+                        <div class="kk-info">
+                            @Model.Invoice.MobilePhone
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-4 col-xs-12 ">
+                <span class="label-info-checkout">
+                    <img class="img-responsive" src="/assets/icons/icon_address.png">
+                    <span>اطلاعات آدرس</span>
+                </span>
+                <div class="row">
+                    <div class="col-md-3 col-xs-6">
+                        <span class="kk-label">کدپستی</span>
+                    </div>
+                    <div class="col-md-9 col-xs-6">
+                        <div class="kk-info">
+                            @Model.Invoice.PostalCode
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3 col-xs-6">
+                        <span class="kk-label">آدرس</span>
+                    </div>
+                    <div class="col-md-9 col-xs-6">
+                        <div class="kk-info">@Model.Invoice.PostalAddress</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-4 col-xs-12">
+                <span class="label-info-checkout">
+                    <img class="img-responsive" src="/assets/icons/car.png">
+                    <span>اطلاعات ماشین</span>
+                </span>
+                <div class="row">
+                    <div class="col-md-3 col-xs-6">
+                        <span class="kk-label">خودرو</span>
+                    </div>
+                    <div class="col-md-9 col-xs-6">
+                        <div class="kk-info">@Model.Invoice.Vehicle</div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3 col-xs-6">
+                        <span class="kk-label">پلاک</span>
+                    </div>
+                    <div class="col-md-9 col-xs-6">
+                        <div class="kk-info">
+                            @Model.Invoice.RegistrationPlate
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="kk-af-section row" style="margin-top: 20px;">
+    <div class="col-lg-8 col-md-8 col-xs-12 ">
+        <div class="idn-info-descript row">
+            <div class="col-lg-12 col-md-12 col-xs-12">
+                <span class="label-info-checkout">
+                    <img class="img-responsive" src="/assets/icons/basket.png">
+                    <span>سبد خرید</span>
+                </span>
+                <ul class="c-checkout__items">
+                    @foreach (var item in Model.Invoice.InvoiceItems)
+                    {
+                        <li>
+                            <div class="row">
+                                <div class="c-cart-item__thumb col-lg-3 col-md-3 col-xs-12">
+                                    <img src="@item.ProductImageUrl">
+                                </div>
+                                <div class="c-cart-item__data col-lg-9 col-md-9 col-xs-12">
+                                    <div class="row">
+                                        <div class="c-cart-item__title col-lg-6 col-md-6 col-xs-12">
+                                            <div>
+                                                @item.ProductName
+                                            </div>
+                                            <div class="price_per_unit">
+                                                @item.Amount.ToString("##,###") ریال
+                                            </div>
+                                            <div>
+                                                @item.Quantity حلقه
+                                            </div>
+                                        </div>
+                                        <div class="c-cart-item__product-price col-lg-6 col-md-6 col-xs-12">
+                                            <span>
+                                                @item.TotalAmount.ToString("##,###") ريال
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                    }
+
+
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-4 col-md-4 col-xs-12 ">
+        <div class="idn-info-descript div_Sum_Price">
+            <div>
+                <span class="label-info-checkout">
+                    <img class="img-responsive" src="/assets/icons/invoice.png">
+                    <span>صورتحساب</span>
+                </span>
+                <div class="row">
+                    <div class="col-md-6 col-xs-6">
+                        <span class="kk-invoice-label">جمع سفارش</span>
+                    </div>
+                    <div class="col-md-6 col-xs-6">
+                        <div class="kk-info">@Model.Invoice.TotalInventoryItemCost.ToString("##,###") ريال</div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 col-xs-6">
+                        <span class="kk-invoice-label">هزینه ارسال</span>
+                    </div>
+                    <div class="col-md-6 col-xs-6">
+                        <div class="kk-info">@Model.Invoice.TotalPostCost.ToString("##,###") ريال</div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 col-xs-6">
+                        <span class="kk-invoice-label">مالیات</span>
+                    </div>
+                    <div class="col-md-6 col-xs-6">
+
+                        <div class="kk-info">@Model.Invoice.Tax.ToString("##,###") ريال</div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 col-xs-6">
+                        <span class="kk-invoice-label">عوارض</span>
+                    </div>
+                    <div class="col-md-6 col-xs-6">
+                        <div class="kk-info">
+                            @Model.Invoice.Charges.ToString("##,###") ريال
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 col-xs-6">
+                        <span class="kk-label">قابل پرداخت</span>
+                    </div>
+                    <div class="col-md-6 col-xs-6">
+                        <div class="kk-info">
+                            @Model.Invoice.TotalCost.ToString("##,###") ريال
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row pad-top-10 mt-2">
+                <div class="col-md-12 col-xs-12">
+                    <span class="label-info-checkout">
+                        <img class="img-responsive" src="/assets/icons/post.png">
+                        <span>َشیوه ارسال</span>
+                    </span>
+                    <div class="col-md-12 row">
+                        <div class="kk-label">ارسال با شبکه پستی بین 4 تا 8 روز کاری</div>
+                    </div>
+                </div>
+            </div>
+            <div class="pad-top-10 mt-2">
+                <span class="label-info-checkout">
+                    <img class="img-responsive" src="/assets/icons/payment.png">
+                    <span>شیوه پرداخت</span>
+                </span>
+                @foreach (var item in Model.Ipgs)
+                {
+                    <div class="pb-2">
+                        <div class="col-md-12">@item.Name</div>
+                        <div class="row ipg">
+                            @foreach (var bankAccount in item.GatewayBankAccounts)
+                            {
+                                <div class="col-md-4 col-sm-6">
+                                    <span class="div-paymaent">
+                                        <img class="img-responsive" src="@(bankAccount.ImageUrl)"/>
+                                        <div>@bankAccount.BankName</div>
+                                        <input name="BankAccountId" value="@(bankAccount.Id)" type="radio">
+
+                                    </span>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                }
+            </div>
+            <div class="clear"></div>
+            <a href="/" class="btn btn-block btn-info">ویرایش</a>
+            <button id="payment-btn" class="btn btn-block btn-success" disabled="disabled">پرداخت</button>
+        </div>
+    </div>
+</div>
+</section>
+</form>
+@section Scripts
+{
+    <script>
+           if($('input[name=BankAccountId]:checked').val() == null){
+             $("#payment-btn").prop("disabled",true);
+           } else{
+             $("#payment-btn").prop("disabled",false);
+           }
+           
+   $("form").submit(function (e) {
+      e.preventDefault();
+     $("#payment-btn").prop("disabled",true);
+     $("#payment-btn").addClass("loading");
+     
+         let data = {
+             BankAccountId:$('input[name=BankAccountId]:checked').val(),
+             InvoiceId: "@(Model.Invoice.Id)"
+         };
+         $.ajax({
+             url: '/Payment',
+             type: 'POST',
+             contentType: 'application/json',
+             data: JSON.stringify(data),
+             success: function (result) {
+              // location.href = `/payment/redirect?bank=1&redirectUrl=${result.gatewayUrl}`
+               location.href = result.gatewayUrl;
+               
+              $("#payment-btn").prop("disabled",false);
+              $("#payment-btn").removeClass("loading");
+             },
+             error: function (xhr, status, error) {
+                 toastr.error(xhr.responseJSON?.detailedMessage ?? "خطای سیستمی");
+                 $("#payment-btn").prop("disabled",false);
+                 $("#payment-btn").removeClass("loading");
+             }
+         });
+     });
+   
+ $('input[name=BankAccountId]').change(function() {
+       var bankAccountId = $('input[name=BankAccountId]:checked').val();
+       if(bankAccountId === null){
+         $("#payment-btn").prop("disabled",true);
+       } else{
+         $("#payment-btn").prop("disabled",false);
+       }
+     });   
+ </script>
+}

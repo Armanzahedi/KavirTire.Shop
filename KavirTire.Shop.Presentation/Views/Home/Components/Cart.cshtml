@@ -1,0 +1,72 @@
+﻿@model KavirTire.Shop.Application.Cart.Queries.GetCartInfo.GetCartInfoQueryResult
+
+<div id="basket">
+    <input type="hidden" id="MaximumNumberOfPurchases" value="@(Model.MaximumNumberOfPurchases)">
+    <input type="hidden" id="ApplyMaximumNumberOfPurchases" value="@(Convert.ToInt32(Model.ApplyMaximumNumberOfPurchases))">
+    <input type="hidden" id="NumberOfPurchaseItems" value="@(Model.NumberOfPurchaseItems)">
+    <input type="hidden" id="ApplyNumberOfPurchaseItems" value="@(Convert.ToInt32(Model.ApplyNumberOfPurchaseItems))">
+    <input type="hidden" id="ApplyPurchaseInterval" value="@(Convert.ToInt32(Model.ApplyPurchaseInterval))">
+    <input type="hidden" id="CustomerPreviousPurchaseCountInPurchaseInterval" value="@(Model.CustomerPreviousPurchaseCountInPurchaseInterval)">
+    <input type="hidden" id="TirePostCost" value="@(Model.TirePostCost)">
+    
+    <div id="empty-basket" style="background-image: url('./assets/empty-basket.png')">
+        سبد خرید شما خالی است.
+    </div>
+
+    <div id="basket-container">
+        <div class="basket-header">
+            <span class="basket-header-span"  style="background-image: url('./assets/icon_basket.png')">
+                <span id="cart-total-count"></span>
+            </span>
+            سبد خرید
+        </div>
+        <div id="basket-items" class="basket-items container-fluid">
+            
+        </div>
+        <div class="factor-wrap">
+            <div class="basket-overall container-fluid">
+                <div class="row">
+                    <div class="title col-5">
+                        <span>جمع سفارش</span>
+                    </div>
+                    <div class="value col-7">
+                        <div class="value row">
+                            <div class="col-12">
+                                <span>
+                                    <span id="cart-total-price"></span> <span class="currency">ريال</span>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="title col-5">
+                        <span>هزینه ارسال</span>
+                    </div>
+                    <div class="value col-7">
+                        <span id="delivery-fee"></span> <span class="currency">ريال</span>
+                    </div>
+                </div>
+            </div>
+            <div class="grand-price container-fluid">
+                <div class="row">
+                    <div class="title col-5">
+                        <b>قابل پرداخت</b>
+                    </div>
+                    <div class="value col-7">
+                        <span id="total-price" style="font-weight: bold"></span>
+                        <b>
+                            <span class="currency">ريال</span>
+                        </b>
+                    </div>
+                </div>
+            </div>
+            <div class="box-btn-container" style="position: relative; z-index: 30; margin-top: 15px;" data-href="/order/checkout/vendor/p6dv16/ORDER__COMMENT">
+                <button class="btn btn-pink btn-block cart-btn" id="submit-cart-btn">
+                    بررسی نهایی
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+

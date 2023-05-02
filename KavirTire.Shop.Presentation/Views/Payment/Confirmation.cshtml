@@ -1,0 +1,35 @@
+﻿@model KavirTire.Shop.Presentation.Models.Payment.PaymentConfirmationResult
+@{
+    ViewData["Title"] = "پرداخت";
+}
+
+<section id="secPaymentConfirmation">
+    <div class="row">
+
+        <div class="col-md-12">
+                <img src='/assets/@(Model.IsSuccessful? "check.png" : "cancel.png")'>
+        </div>
+        <div class="col-md-12 d-flex flex-column justify-content-center align-items-center">
+            @if (Model.IsSuccessful)
+            {
+                <h3>عملیات با موفقیت انجام شد</h3>
+            }
+            else
+            {
+                <h3>تراکنش ناموفق</h3>
+            }
+            <h5>@Html.Raw(Model.Message)</h5>
+        </div>
+        <div class="col-md-12">
+
+            @if (string.IsNullOrWhiteSpace(Model.TraceNo) == false)
+            {
+                <h4>شماره پیگیری : @Model.TraceNo</h4>
+            }
+        </div>
+        <div class="col-md-12">
+            <a href="@(KavirTireOptions.Value.PortalAddress)/profile" class="btn btn-info">بازگشت به پروفایل</a>
+        </div>
+
+    </div>
+</section>

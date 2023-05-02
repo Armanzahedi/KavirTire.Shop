@@ -1,0 +1,35 @@
+version: '3.4'
+
+services:
+  kavirtire.shop.presentation:
+    image: kavirtireshop
+    container_name: kavirtireshop
+    restart: always
+    build:
+      context: .
+      dockerfile: KavirTire.Shop.Presentation/Dockerfile
+    ports:
+      - "5000:80"
+    depends_on:
+      - redis
+    networks:
+      - kavirtire  
+  redis:
+    image: redis:7
+    container_name: redis
+    ports:
+      - "6379:6379"
+    restart: always
+    volumes:
+      - ./redis-data:/data
+    command: redis-server
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+    networks:
+      - kavirtire
+networks:
+  kavirtire:
+    driver: bridge

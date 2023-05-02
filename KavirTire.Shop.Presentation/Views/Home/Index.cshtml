@@ -1,0 +1,86 @@
+﻿@model ShoppingViewModel
+@{
+    ViewData["Title"] = "خانه";
+}
+<div id="content-container" class="container">
+    <div class="page-heading breadcrumb-section w-100">
+        <div class="container">
+            <div class="row">
+                <div class="col-9">
+                    <div class="page-header">
+                        <h1>
+                            <span class="xrm-attribute xrm-editable-text">
+                                <span class="xrm-attribute-value">فروشگاه</span>
+                            </span>
+                        </h1>
+                    </div>
+                    <div class="notifications"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-8" style="min-height: 200px">
+            @if (Model.HasProduct)
+            {
+                @foreach (var section in Model
+                    .ProductSections
+                    .Where(x => x.Products != null && x.Products.Any())
+                    .OrderBy(x => x.Order))
+                {
+                    <div class="py-4">
+                        <h5 class="pb-3">@(section.SectionName):</h5>
+                        <div class="row">
+                            @foreach (var item in section.Products)
+                            {
+                                <div class="col-xl-4 col-6">
+                                    <div class="product-box">
+                                        <div class="img-wrapper">
+                                            <div class="front">
+                                                <a href="@(item.ImageUrl)" class="product-image">
+                                                    <img src="@(item.ImageUrl)" class="img-fluid blur-up lazyloaded" alt="">
+                                                </a>
+                                            </div>
+                                            <div class="back">
+                                                <a target="_blank" href="@(KavirTireOptions.Value.PortalAddress)/products/product/@(item.Id)" class="product-image">
+                                                    <img src="@(item.ImageUrl)" class="img-fluid blur-up lazyloaded" alt="">
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <div class="product-detail py-2">
+                                            <div>
+                                                <a target="_blank" href="@(KavirTireOptions.Value.PortalAddress)/products/product/@(item.Id)">
+                                                    <h6>@(item.Name)</h6>
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <div class="d-flex align-items-center justify-content-between p-2">
+                                            <div class="item-Price">
+                                                <span class="price">@(item.Price.ToString("##,###"))</span> <span class="currency">ريال</span>
+                                            </div>
+                                            @if (item.QuantityInStock > 0)
+                                            {
+                                                <div class="col-md-5 insert add-to-cart" data-id="@(item.Id)" data-title="@(item.Name)" data-price="@((long)item.Price)">افزودن به سبد</div>
+                                            }
+                                            else
+                                            {
+                                                <div class="col-md-5 unavailable" onclick="">ناموجود</div>
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                }
+            }
+            else
+            {
+                <h5 class="py-4">محصولی پیدا نشد.</h5>
+            }
+        </div>
+        <div class="col-md-4 basket-container">
+           @await Component.InvokeAsync("Cart")
+        </div>
+    </div>
+</div>

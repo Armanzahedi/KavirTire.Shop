@@ -1,0 +1,2 @@
+GET http://localhost:8085/api/sync
+Accept: application/json

@@ -1,0 +1,8 @@
+### Send POST request with json body
+POST https://localhost:7219/payment/verification?ipg=11C28E8E-E8A0-42CB-9FFD-079F3A9479A7&pmnt=11C28E8E-E8A0-42CB-9FFD-079F3A9479A7&inv=11C28E8E-E8A0-42CB-9FFD-079F3A9479A7
+Content-Type: application/json
+
+{
+    "aaa":"eeee"
+}
+

@@ -1,0 +1,18 @@
+﻿@using KavirTire.Shop.Domain.IPGs.Enums
+@model KavirTire.Shop.Presentation.Models.Payment.PaymentRedirect
+
+<h1>در حال انتقال به درگاه</h1>
+@if (Model.Bank == Bank.Saman)
+{
+    var urlArr = Model.RedirectUrl.Split("?token=");
+    <form id="sep" action="@urlArr[0]" method="post">
+        <input type="hidden" name="Token" value="@urlArr[1]" />
+        <input name="GetMethod" type="text" value="">
+    </form>
+    <script>
+    window.onload = function(){
+      document.forms['sep'].submit();
+    }
+    </script>
+}
+

@@ -1,0 +1,36 @@
+﻿@model TermsOfServiceViewModel
+@{
+    ViewData["Title"] = "قوانین استفاده";
+}
+<p>@Html.Raw(Model.WebPage.Data)</p>
+
+<div class="px-4 pb-5">
+    <input type="checkbox" id="accept-tof" />
+    <span for="accept-tof">شرایط فوق را به صورت کامل مطالعه و با آگاهی کامل مفاد آن را تایید می نمایم.</span>
+    <div class="text-center pt-3">
+        <a class="btn btn-OnlineSaleInformation disabled" href="#" id="shopping-btn">
+            <i class="fa fa-shopping-basket"></i> آغاز فرآیند خرید
+        </a>
+    </div>
+</div>
+
+
+@section Scripts{
+    <script>
+        $(document).ready(function() {
+          $('#accept-tof').change(function() {
+            if($(this).is(':checked')) {
+              $('#shopping-btn').removeClass("disabled");
+            } else {
+              $('#shopping-btn').addClass("disabled");
+            }
+          });
+          $('#shopping-btn').click(function() {
+            if($('#shopping-btn').hasClass("disabled") === false) {
+              setCookie("tof-approved", "true", 30);
+              location.href = "@(Model.ReturnUrl)";
+           }
+          });
+        });
+    </script>
+}

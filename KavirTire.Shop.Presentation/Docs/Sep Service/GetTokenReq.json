@@ -1,0 +1,17 @@
+{
+  "Action": "Token",
+  "TerminalId": "12548377",
+  "RedirectUrl": "https://localhost:7219/payment/verification?pmnt=bc57dff5-2018-4a3f-758a-08db4940b30d&inv=6f389d2e-1628-4170-687d-08db493e68ec&ipg=7b8ec030-8fe4-eb11-8199-0050569abf13",
+  "ResNum": "bc57dff5-2018-4a3f-758a-08db4940b30d",
+  "ResNum1": null,
+  "ResNum2": null,
+  "ResNum3": null,
+  "ResNum4": null,
+  "Amount": 20000,
+  "TotalAmount": 20000,
+  "CellNumber": "09921744820",
+  "SettleMentIBANInfo": [
+    { "IBAN": "IR250560080281000777777009", "Amount": 10000, "PurchaseID": "" },
+    { "IBAN": "IR030100004101047771205037", "Amount": 10000, "PurchaseID": "" }
+  ]
+}
