@@ -20,6 +20,27 @@ builder.Services
     .AddInfrastructureServices(builder.Configuration);
 
 builder.Services.AddCors();
+builder.Services.AddWebOptimizer(pipeline =>
+{
+    pipeline
+        .AddCssBundle("/css/bundle.css",
+             // "/css/glyphicons-font-awesome-migrate.min.css",
+            "/css/default.bundle.css",
+             // "/css/account.css",
+             // "/css/fa-custom.css",
+            "/css/custom.css",
+            "toastr/toastr.min.css"
+            ).MinifyCss();
+
+    pipeline
+        .AddJavaScriptBundle("/js/bundle.js",
+             "/lib/jquery/dist/jquery.min.js",
+            "/toastr/toastr.min.js",
+            "/toastr/toastr.custom.js",
+             "/js/site.js",
+            "/js/cart.js"
+        ).MinifyJavaScript();
+});
 
 
 var app = builder.Build();
@@ -30,6 +51,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+app.UseWebOptimizer();
 // app.UseHttpsRedirection();
 
 

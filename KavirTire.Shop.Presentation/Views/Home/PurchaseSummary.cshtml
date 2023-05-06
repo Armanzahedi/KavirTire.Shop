@@ -260,7 +260,6 @@
              contentType: 'application/json',
              data: JSON.stringify(data),
              success: function (result) {
-              // location.href = `/payment/redirect?bank=1&redirectUrl=${result.gatewayUrl}`
                location.href = result.gatewayUrl;
                
               $("#payment-btn").prop("disabled",false);

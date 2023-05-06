@@ -6,6 +6,7 @@ using KavirTire.Shop.Infrastructure.SyncService.Common.RecurringJob;
 using KavirTire.Shop.Infrastructure.SyncService.CRM.Common.Config;
 using KavirTire.Shop.Infrastructure.SyncService.CRM.Repository;
 using KavirTire.Shop.Infrastructure.SyncService.Services;
+using KavirTire.Shop.Infrastructure.SyncService.Services.SynCrmService;
 using KavirTire.Shop.Infrastructure.SyncService.Shop.Persistence;
 using Microsoft.Extensions.DependencyInjection;
 using NLog.Internal;

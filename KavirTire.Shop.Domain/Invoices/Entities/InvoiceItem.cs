@@ -1,5 +1,4 @@
 ﻿using KavirTire.Shop.Domain.Common;
-using KavirTire.Shop.Domain.Products;
 
 namespace KavirTire.Shop.Domain.Invoices.Entities;
 

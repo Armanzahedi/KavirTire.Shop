@@ -8,17 +8,17 @@
         @ViewData["Title"]
         | فروشگاه کویرتایر
     </title>
-    <link href="/css/glyphicons-font-awesome-migrate.min.css" rel="stylesheet"/>
-    <link href="/css/default.bundle.css" rel="stylesheet"/>
-    <link rel="stylesheet" href="/css/account.css">
-    <link href="/css/fa-custom.css" rel="stylesheet"/>
-    <link href="/css/custom.css" rel="stylesheet"/>
-    <link href="/toastr/toastr.min.css" rel="stylesheet"/>
+    <link href="/css/bundle.css" rel="stylesheet"/>
+    @* <link href="/css/glyphicons-font-awesome-migrate.min.css" rel="stylesheet"/> *@
+    @* <link href="/css/default.bundle.css" rel="stylesheet"/> *@
+    @* <link  href="/css/account.css" rel="stylesheet" /> *@
+    @* <link href="/css/fa-custom.css" rel="stylesheet"/> *@
+    @* <link href="/css/custom.css" rel="stylesheet"/> *@
+    @* <link href="/toastr/toastr.min.css" rel="stylesheet"/> *@
     
     <script type="text/javascript">!function(){function t(){var t=document.createElement("script");t.type="text/javascript",t.async=!0,localStorage.getItem("rayToken")?t.src="https://app.raychat.io/scripts/js/"+o+"?rid="+localStorage.getItem("rayToken")+"&href="+window.location.href:t.src="https://app.raychat.io/scripts/js/"+o+"?href="+window.location.href;var e=document.getElementsByTagName("script")[0];e.parentNode.insertBefore(t,e)}var e=document,a=window,o="2303eb12-3f26-4c78-ad5d-fb143e62bf5f";"complete"==e.readyState?t():a.attachEvent?a.attachEvent("onload",t):a.addEventListener("load",t,!1)}();</script>
 </head>
 <body class="rtl">
-<div id="spinner" class="se-pre-con"></div>
 <div class="container">
     <div class="row">
         <div class="col-sm-12">
@@ -29,7 +29,7 @@
                 </div>
                 <div class="brand-logo layout2-logo">
                     <a href="/">
-                        <img src="/images/kavirlogo.png" class="img-fluid blur-up lazyload"
+                        <img src="/images/kavirlogo.png" class="img-fluid "
                              alt="کویرتایر">
                     </a>
                 </div>
@@ -40,7 +40,7 @@
                             <li class="onhover-div mobile-search">
                                 <div>
                                     <img src="/images/users.png"
-                                         class="img-fluid blur-up lazyload" alt="">
+                                         class="img-fluid" alt="">
                                     <i class="ti-user"></i>
                                 </div>
                                 <div class="show-div account">
@@ -61,7 +61,7 @@
         </div>
     </div>
 </div>
-<script src="/js/default.preform.bundle.js"></script>
+@* <script src="/js/default.preform.bundle.js"></script> *@
     <div id="content">
         <div class="page-content">
             @RenderBody()
@@ -181,14 +181,14 @@
                             </ul>
                         </div>
                         <div>
-                            <div class="credit-certificate mt-3">
-                                <a target="_blank" href="https://logo.samandehi.ir/Verify.aspx?id=1014489&amp;p=rfthobpdrfthaodsaodsmcsipfvl">
-                                    <img style="cursor:pointer" width="100px" alt="logo-samandehi" src="~/images/Kavir/lg_enamad_test2.png"/>
-                                </a>
-                                <a target="_blank" href="https://trustseal.enamad.ir/?id=42368&amp;Code=HniMumvVIDTOpxNglEor">
-                                    <img width="100px" alt="" style="cursor:pointer" id="HniMumvVIDTOpxNglEor" src="~/images/Kavir/lg_enamad_test.png"/>
-                                </a>
-                            </div>
+                            @* <div class="credit-certificate mt-3"> *@
+                            @*     <a target="_blank" href="https://logo.samandehi.ir/Verify.aspx?id=1014489&amp;p=rfthobpdrfthaodsaodsmcsipfvl"> *@
+                            @*         <img style="cursor:pointer" width="100px" alt="logo-samandehi" src="~/images/Kavir/lg_enamad_test2.png"/> *@
+                            @*     </a> *@
+                            @*     <a target="_blank" href="https://trustseal.enamad.ir/?id=42368&amp;Code=HniMumvVIDTOpxNglEor"> *@
+                            @*         <img width="100px" alt="" style="cursor:pointer" id="HniMumvVIDTOpxNglEor" src="~/images/Kavir/lg_enamad_test.png"/> *@
+                            @*     </a> *@
+                            @* </div> *@
                         </div>
 
                     </div>
@@ -213,12 +213,14 @@
     <div>
         <i class="fa fa-angle-double-up"></i>
     </div>
-</div>
-<script src="/toastr/toastr.min.js"></script>
-<script src="/toastr/toastr.custom.js"></script>
-<script src="/js/general.js"></script>
-<script src="/js/site.js"></script>
-<script src="/js/cart.js"></script>
+</div>        
+<script src="/js/bundle.js"></script>
+@* <script src="/lib/jquery/dist/jquery.min.js"></script> *@
+@* <script src="/toastr/toastr.min.js"></script> *@
+@* <script src="/toastr/toastr.custom.js"></script> *@
+@* <script src="/js/general.js"></script> *@
+@* <script src="/js/site.js"></script> *@
+@* <script src="/js/cart.js"></script> *@
 @await RenderSectionAsync("Scripts", false)
 </body>
 </html>

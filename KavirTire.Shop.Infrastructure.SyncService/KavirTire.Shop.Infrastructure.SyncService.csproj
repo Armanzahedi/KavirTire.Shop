@@ -334,7 +334,10 @@
         <Compile Include="Program.cs" />
         <Compile Include="Properties\AssemblyInfo.cs" />
         <Compile Include="Services\DataMigrationService.cs" />
-        <Compile Include="Services\SyncCrmService.cs" />
+        <Compile Include="Services\SynCrmService\Model\CrmPayment.cs" />
+        <Compile Include="Services\SynCrmService\Model\CrmQuote.cs" />
+        <Compile Include="Services\SynCrmService\Model\CrmQuoteProduct.cs" />
+        <Compile Include="Services\SynCrmService\SyncCrmService.cs" />
         <Compile Include="Shop\Common\EntityBase.cs" />
         <Compile Include="Shop\Common\EntityExtensions.cs" />
         <Compile Include="Shop\Models\BankAccount.cs" />

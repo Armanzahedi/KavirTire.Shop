@@ -21,7 +21,9 @@ public class HomeController : BaseController
     private readonly GeneralPolicyService _generalPolicyService;
     private readonly IReadRepository<OrderHistory> _orderHistoryRepo;
 
-    public HomeController(ILogger<HomeController> logger, GeneralPolicyService generalPolicyService, IReadRepository<OrderHistory> orderHistoryRepo)
+    public HomeController(ILogger<HomeController> logger,
+        GeneralPolicyService generalPolicyService,
+        IReadRepository<OrderHistory> orderHistoryRepo)
     {
         _logger = logger;
         _generalPolicyService = generalPolicyService;
@@ -31,6 +33,10 @@ public class HomeController : BaseController
     // [TermsOfServiceApprovedFilter]
     public async Task<IActionResult> Index()
     {
+        var generalPolicy = await _generalPolicyService.GetGeneralPolicy();
+        if(generalPolicy?.BasketExpirationInMin != null)
+            Response.Cookies.Append("cart-exp",generalPolicy.BasketExpirationInMin.ToString());
+        
         var queryResult = await Mediator.Send(new GetProductsQuery());
         return View(
             new ShoppingViewModel

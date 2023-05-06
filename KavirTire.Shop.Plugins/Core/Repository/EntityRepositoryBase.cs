@@ -1,10 +1,10 @@
 ﻿using System;
-using Microsoft.Crm.Sdk.Messages;
 using Microsoft.Xrm.Sdk;
 using Microsoft.Xrm.Sdk.Client;
 using Microsoft.Xrm.Sdk.Messages;
 using Microsoft.Xrm.Sdk.Query;
 using KavirTire.Shop.Plugins.Core.Extensions;
+using Microsoft.Crm.Sdk.Messages;
 
 namespace KavirTire.Shop.Plugins.Core.Repository
 {

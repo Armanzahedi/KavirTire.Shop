@@ -8,8 +8,43 @@ const CustomerPreviousPurchaseCountInPurchaseInterval = $("#CustomerPreviousPurc
 
 const TirePostCost = $("#TirePostCost").val();
 
+function getCookie(name) {
+    let cookies = document.cookie.split(";");
+
+    for (let i = 0; i < cookies.length; i++) {
+        let cookie = cookies[i].trim();
+        if (cookie.startsWith(`${name}=`)) {
+            let value = cookie.substring(`${name}=`.length, cookie.length);
+            return value
+        }
+    }
+    return null;
+}
+function getMinutesSpan(date1, date2) {
+    const diffMs = Math.abs(date2 - date1);
+    const diffMinutes = Math.floor(diffMs / (1000 * 60));
+    return diffMinutes;
+}
+
 $(document).ready(function () {
+    var cart = retrieveCart();
+    if(cart?.ModifiedDate != null){
+        var now  = new Date();
+        var modifDate = new Date(cart?.ModifiedDate);
+        var diffMin = getMinutesSpan(now,modifDate);
+        var cartExpiration = 100;
+        
+        var cartExpirationCookie = getCookie("cart-exp");
+        if(cartExpirationCookie != null){
+            cartExpiration = parseInt(cartExpirationCookie);
+        }
+        
+        if(diffMin >= cartExpiration){
+            localStorage.removeItem("cart");
+        }
+    }
     updateView();
+    
 });
 
 function retrieveCart() {
@@ -21,6 +56,7 @@ function retrieveCart() {
             TirePostCost: 0,
             TotalPrice: 0,
             TotalQuantity: 0,
+            ModifiedDate: null,
         };
     }
     return JSON.parse(cartItemsString);
@@ -44,7 +80,7 @@ function updateCart(cart) {
     cart.TirePostCost = tirePostCost;
     cart.TotalPrice = total;
     cart.TotalQuantity = totalQuantity;
-
+    cart.ModifiedDate = Date.now();
     localStorage.setItem("cart", JSON.stringify(cart));
     updateView();
 }

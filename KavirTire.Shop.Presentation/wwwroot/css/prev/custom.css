@@ -1,4 +1,22 @@
+.btn-OnlineSaleInformation.disabled {
+    pointer-events: none;
+    cursor: default;
+    color: #c4c4c4;
+    border: 3px solid #c4c4c4;
+}
+
+
 /*Home styles*/
+.tabsContentImg button.modbtn {
+    position: absolute;
+    top: 120px;
+    left: 50%;
+    font-size: 50px;
+    background-color: transparent;
+    border: none;
+    opacity: .7;
+    transform: translateX(-50%) translateY(-50%);
+}
 
 .footer-bottom a img {
 
@@ -6,6 +24,10 @@
     width: 1px;
     height: 1px;
 
+}
+
+nav#main-nav ul > li a {
+    color: #000;
 }
 
 /*Shopping.css*/
@@ -42,6 +64,15 @@
     padding-right: 10px;
 }
 
+.box-item {
+    /*border: 2px solid #808080;*/
+}
+
+.divPrice {
+    /*border-top: 2px solid #808080;*/
+    padding-top: 2px;
+}
+
 #empty-basket {
     border: 1px solid #c7c7c7;
     height: 150px;
@@ -55,6 +86,21 @@
 
 section {
     padding: 20px;
+}
+
+.hide {
+    display: none;
+}
+
+.sticky-basket {
+    position: sticky;
+    top: 10px;
+    transition: top 0.5s ease 0s;
+    /*margin-top: 50px;*/
+}
+
+.collection-product-wrapper .product-wrapper-grid .product-box {
+    margin-top: 0px;
 }
 
 .basket-header {
@@ -180,7 +226,7 @@ section {
     padding: 0 5px;
 }
 
-#basket-container .basket-overall .value {
+#basket-container .basket-overall .value, .other-info .value {
     font-size: 11px;
     text-align: left;
 }
@@ -201,7 +247,18 @@ b, strong {
     font-weight: 700;
 }
 
-.col, .col-12, .col-5, .col-6, .col-7, .col-9, .col-lg-12, .col-lg-3, .col-lg-4, .col-lg-6, .col-lg-8, .col-lg-9, .col-md-12, .col-md-3, .col-md-4, .col-md-5, .col-md-6, .col-md-7, .col-md-8, .col-md-9, .col-sm-12, .col-sm-6, .col-xl-4 {
+h5.my_product_title {
+    line-height: 26px;
+    font-weight: 400;
+    color: #505050;
+    padding: 0 10px;
+    height: 31px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.col, .col-1, .col-10, .col-11, .col-12, .col-2, .col-3, .col-4, .col-5, .col-6, .col-7, .col-8, .col-9, .col-auto, .col-lg, .col-lg-1, .col-lg-10, .col-lg-11, .col-lg-12, .col-lg-2, .col-lg-3, .col-lg-4, .col-lg-5, .col-lg-6, .col-lg-7, .col-lg-8, .col-lg-9, .col-lg-auto, .col-md, .col-md-1, .col-md-10, .col-md-11, .col-md-12, .col-md-2, .col-md-3, .col-md-4, .col-md-5, .col-md-6, .col-md-7, .col-md-8, .col-md-9, .col-md-auto, .col-sm, .col-sm-1, .col-sm-10, .col-sm-11, .col-sm-12, .col-sm-2, .col-sm-3, .col-sm-4, .col-sm-5, .col-sm-6, .col-sm-7, .col-sm-8, .col-sm-9, .col-sm-auto, .col-xl, .col-xl-1, .col-xl-10, .col-xl-11, .col-xl-12, .col-xl-2, .col-xl-3, .col-xl-4, .col-xl-5, .col-xl-6, .col-xl-7, .col-xl-8, .col-xl-9, .col-xl-auto {
     float: right;
 }
 
@@ -217,7 +274,31 @@ b, strong {
     padding: 10px 12px;
 }
 
- h3, h4 {
+#divProducts img {
+    width: 100%;
+}
+
+#divProducts .product-image {
+    background-size: 100% !important;
+    background-position: center center;
+    display: block;
+    background-repeat: no-repeat;
+}
+
+#divPagination .active {
+    color: white;
+    background: #b7b7b7;
+}
+
+#secPaymentConfirmation {
+    padding: 80px;
+}
+
+#secPaymentConfirmation img {
+    width: 80px;
+}
+
+#secPaymentConfirmation div, h3, h4 {
     text-align: center !important;
     padding: 3px;
 }
@@ -268,7 +349,7 @@ b, strong {
 }
 
 /*Purchase Summary*/
-.col, .col-12, .col-5, .col-6, .col-7, .col-9, .col-lg-12, .col-lg-3, .col-lg-4, .col-lg-6, .col-lg-8, .col-lg-9, .col-md-12, .col-md-3, .col-md-4, .col-md-5, .col-md-6, .col-md-7, .col-md-8, .col-md-9, .col-sm-12, .col-sm-6, .col-xl-4 {
+.col, .col-1, .col-10, .col-11, .col-12, .col-2, .col-3, .col-4, .col-5, .col-6, .col-7, .col-8, .col-9, .col-auto, .col-lg, .col-lg-1, .col-lg-10, .col-lg-11, .col-lg-12, .col-lg-2, .col-lg-3, .col-lg-4, .col-lg-5, .col-lg-6, .col-lg-7, .col-lg-8, .col-lg-9, .col-lg-auto, .col-md, .col-md-1, .col-md-10, .col-md-11, .col-md-12, .col-md-2, .col-md-3, .col-md-4, .col-md-5, .col-md-6, .col-md-7, .col-md-8, .col-md-9, .col-md-auto, .col-sm, .col-sm-1, .col-sm-10, .col-sm-11, .col-sm-12, .col-sm-2, .col-sm-3, .col-sm-4, .col-sm-5, .col-sm-6, .col-sm-7, .col-sm-8, .col-sm-9, .col-sm-auto, .col-xl, .col-xl-1, .col-xl-10, .col-xl-11, .col-xl-12, .col-xl-2, .col-xl-3, .col-xl-4, .col-xl-5, .col-xl-6, .col-xl-7, .col-xl-8, .col-xl-9, .col-xl-auto {
     float: right;
 }
 

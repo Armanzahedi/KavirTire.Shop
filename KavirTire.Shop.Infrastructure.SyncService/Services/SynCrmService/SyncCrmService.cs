@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Data;
-using System.Linq;
 using System.Threading.Tasks;
 using Hangfire;
 using KavirTire.Shop.Infrastructure.SyncService.Common.RecurringJob;
@@ -16,7 +15,7 @@ using KavirTire.Shop.Infrastructure.SyncService.Shop.Persistence;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Xrm.Sdk;
 
-namespace KavirTire.Shop.Infrastructure.SyncService.Services
+namespace KavirTire.Shop.Infrastructure.SyncService.Services.SynCrmService
 {
     [CronSchedule("* * * * *")]
     public class SyncCrmService : IRecurringJob
