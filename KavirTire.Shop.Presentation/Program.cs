@@ -4,8 +4,6 @@ using KavirTire.Shop.Infrastructure.Cache;
 using KavirTire.Shop.Infrastructure.Persistence.Common;
 using KavirTire.Shop.Infrastructure.RecurringJob;
 using KavirTire.Shop.Presentation.Middlewares.WebFileHandler;
-using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Serilog;
 using Serilog.Events;
 using Serilog.Ui.MsSqlServerProvider;

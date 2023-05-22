@@ -24,6 +24,7 @@ public static class DependencyInjection
                 options.ResponseType = "id_token";
                 options.CallbackPath = "/signin-oidc";
                 options.SaveTokens = true;
+                options.RequireHttpsMetadata = false;
                 options.Scope.Add("openid");
             });
 
