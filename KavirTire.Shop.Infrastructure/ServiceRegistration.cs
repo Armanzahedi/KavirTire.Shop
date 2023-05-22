@@ -95,7 +95,6 @@ public static class ServiceRegistration
             .WithCompressor("mymsgpack", "lz4");
         });
 
-        services.AddAuthentication(configuration);
         return services;
     }
 }

@@ -55,7 +55,7 @@ builder.Services.AddWebOptimizer(pipeline =>
 
 builder.Services.AddSerilogUi(options => { options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"), "SystemLogs"); });
 
-
+builder.Services.AddAuthentication();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
