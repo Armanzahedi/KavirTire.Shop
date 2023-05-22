@@ -1,9 +1,11 @@
 using KavirTire.Shop.Application;
 using KavirTire.Shop.Infrastructure;
 using KavirTire.Shop.Infrastructure.Cache;
+using KavirTire.Shop.Infrastructure.Identity;
 using KavirTire.Shop.Infrastructure.Persistence.Common;
 using KavirTire.Shop.Infrastructure.RecurringJob;
 using KavirTire.Shop.Presentation.Middlewares.WebFileHandler;
+using Microsoft.AspNetCore.HttpOverrides;
 using Serilog;
 using Serilog.Events;
 using Serilog.Ui.MsSqlServerProvider;
@@ -52,11 +54,35 @@ builder.Services.AddWebOptimizer(pipeline =>
         ).MinifyJavaScript();
 });
 
-
 builder.Services.AddSerilogUi(options => { options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"), "SystemLogs"); });
 
-builder.Services.AddAuthentication();
+
+builder.Services.Configure<ForwardedHeadersOptions>(options =>
+{
+    options.ForwardedHeaders =
+        ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto;
+    options.KnownProxies.Clear();
+});
+
+
+builder.Services.AddKavirAuthentication(builder.Configuration);
+
+var cookieDomain = builder.Configuration.GetValue<string?>("Authentication:CookieDomain");
+if(cookieDomain != null)
+{
+    builder.Services.ConfigureApplicationCookie(options =>
+    {
+        options.Cookie.Domain = cookieDomain;
+    });
+}
+
 var app = builder.Build();
+
+app.UseCookiePolicy(new CookiePolicyOptions()
+{
+    MinimumSameSitePolicy = SameSiteMode.None,
+    Secure = CookieSecurePolicy.Always
+});
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -72,6 +98,7 @@ app.UseWebOptimizer();
 app.UseStaticFiles();
 app.UseRouting();
 
+app.UseForwardedHeaders();
 app.UseAuthentication();
 app.UseAuthorization();
 
