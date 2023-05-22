@@ -12,7 +12,9 @@ namespace KavirTire.Shop.Infrastructure.SyncService.Shop.Models.Invoice.Specific
                            x.InvoiceStatus == InvoiceStatus.Expired) &&
                           x.SyncStatus == InvoiceSyncStatus.OutOfSync)
                 .Include(x => x.InvoiceItems)
-                .Include(x => x.Payments);
+                .Include(x => x.Payments)
+                .ThenInclude(x=>x.PaymentLogs)
+                .AsSplitQuery();
         }
     }
 }

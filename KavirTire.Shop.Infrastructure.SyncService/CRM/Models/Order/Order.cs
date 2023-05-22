@@ -54,5 +54,15 @@ namespace KavirTire.Shop.Infrastructure.SyncService.CRM.Models.Order
                 value.AttributeName = CrmResource.Order_TotalQuantity;
             }
         }
+        public ModelAttribute<long> VersionNumber
+        {
+            get => new ModelAttribute<long>(this, CrmResource.Order_VersionNumber);
+            set
+            {
+                this.SetAttributeValue(CrmResource.Order_VersionNumber, value.Value);
+                value.Entity = this;
+                value.AttributeName = CrmResource.Order_VersionNumber;
+            }
+        }
     }
 }

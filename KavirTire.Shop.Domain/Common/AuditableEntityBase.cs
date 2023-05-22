@@ -6,9 +6,9 @@ namespace KavirTire.Shop.Domain.Common;
 [Auditable]
 public class AuditableEntityBase<TId>: EntityBase<TId>
 {
-    public Guid? CreatedBy { get; set; }
+    public string? CreatedBy { get; set; }
     public DateTime CreatedOn { get; set; }
-    public Guid? LastModifiedBy { get; set; }
+    public string? LastModifiedBy { get; set; }
     public DateTime? LastModifiedOn { get; set; }
 }   
 public class AuditableEntityBase: AuditableEntityBase<int>

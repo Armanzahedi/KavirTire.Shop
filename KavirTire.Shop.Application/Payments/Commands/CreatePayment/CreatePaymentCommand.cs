@@ -4,7 +4,8 @@ using KavirTire.Shop.Application.Common.Persistence;
 using KavirTire.Shop.Application.Common.Services;
 using KavirTire.Shop.Application.Common.Specifications;
 using KavirTire.Shop.Application.InventoryItems.Services;
-using KavirTire.Shop.Application.Payments.Services.PaymentService;
+using KavirTire.Shop.Application.Payments.Services;
+using KavirTire.Shop.Application.Payments.Services.PaymentGateway;
 using KavirTire.Shop.Application.Payments.Specifications;
 using KavirTire.Shop.Domain.InventoryItems;
 using KavirTire.Shop.Domain.IPGs;
@@ -20,13 +21,13 @@ public class CreatePaymentCommandHandler : IRequestHandler<CreatePaymentCommand,
     private readonly GeneralPolicyService _generalPolicyService;
     private readonly IInvoiceRepository _invoiceRepo;
     private readonly IReadRepository<InventoryItem> _inventoryItemReadRepo;
-    private readonly IRepository<Domain.Payments.Payment> _paymentRepo;
+    private readonly IRepository<Payment> _paymentRepo;
     private readonly IReadRepository<Ipg> _ipgRepo;
     private readonly ICurrentUser _currentUser;
     private readonly IUnitOfWork _unitOfWork;
-    private readonly IPaymentServiceFactory _paymentServiceFactory;
+    private readonly IPaymentGatewayFactory _paymentGatewayFactory;
     private readonly InventoryItemReservationService _inventoryItemReservationService;
-    private readonly ISequenceGenerator _sequenceGenerator;
+    private readonly ICreatePaymentService _createPaymentService;
 
     private readonly IDistributedLock _distributedLock;
 
@@ -34,15 +35,14 @@ public class CreatePaymentCommandHandler : IRequestHandler<CreatePaymentCommand,
     public CreatePaymentCommandHandler(
         ICurrentUser currentUser,
         IInvoiceRepository invoiceRepo,
-        IRepository<Domain.Payments.Payment> paymentRepo,
+        IRepository<Payment> paymentRepo,
         IReadRepository<Ipg> ipgRepo,
         IReadRepository<InventoryItem> inventoryItemReadRepo,
         IUnitOfWork unitOfWork,
-        IPaymentServiceFactory paymentServiceFactory,
+        IPaymentGatewayFactory paymentGatewayFactory,
         InventoryItemReservationService inventoryItemReservationService,
         GeneralPolicyService generalPolicyService,
-        ISequenceGenerator sequenceGenerator,
-        IDistributedLock distributedLock)
+        IDistributedLock distributedLock, ICreatePaymentService createPaymentService)
     {
         _currentUser = currentUser;
         _invoiceRepo = invoiceRepo;
@@ -50,11 +50,11 @@ public class CreatePaymentCommandHandler : IRequestHandler<CreatePaymentCommand,
         _ipgRepo = ipgRepo;
         _inventoryItemReadRepo = inventoryItemReadRepo;
         _unitOfWork = unitOfWork;
-        _paymentServiceFactory = paymentServiceFactory;
+        _paymentGatewayFactory = paymentGatewayFactory;
         _inventoryItemReservationService = inventoryItemReservationService;
         _generalPolicyService = generalPolicyService;
-        _sequenceGenerator = sequenceGenerator;
         _distributedLock = distributedLock;
+        _createPaymentService = createPaymentService;
     }
 
     public async Task<CreatePaymentCommandResponse> Handle(CreatePaymentCommand request,
@@ -78,78 +78,44 @@ public class CreatePaymentCommandHandler : IRequestHandler<CreatePaymentCommand,
             Guard.Against.Null(ipg, null, "درگاه نا معتبر.");
             Guard.Against.Null(ipg.BankAccounts, null, "حساب نا معتبر.");
 
-            var paymentGateway = _paymentServiceFactory.Create(ipg);
+            var paymentGateway = _paymentGatewayFactory.Create(ipg);
 
             _unitOfWork.BeginTransaction();
-
-
 
             Payment payment;
 
             var existingPayment =
                 await _paymentRepo.FirstOrDefaultAsync(new PaymentByInvoiceId(invoice.Id), cancellationToken);
 
-            //if(existingPayment != null)
-            //    payment = existingPayment;
-            //else
-            //{
-            //    var resNo = (await _sequenceGenerator.GetNext(cancellationToken)).ToString();
-            //    payment = new Payment(resNo)
-            //    {
-            //        Amount = invoice.TotalCost,
-            //        CustomerId = invoice.CustomerId,
-            //        InvoiceId = invoice.Id,
-            //        IpgId = ipg.Id,
-            //        BankAccountId = request.BankAccountId,
-            //        PostBankAccountId = ipg.PostBankAccountId,
-            //    };
-
-            //    invoice.SetExpiration(generalPolicy);
-            //    foreach (var item in invoice.InvoiceItems)
-            //    {
-            //        var inventoryItemId = await _inventoryItemReadRepo
-            //            .FirstOrDefaultAsync(new InventoryItemIdByProductIdSpec(item.ProductId), cancellationToken);
-
-            //        await _inventoryItemReservationService.Reserve(inventoryItemId, item.Quantity, cancellationToken);
-            //    }
-
-            //    payment.LongInfo("قبض پرداخت ایجاد شد.");
-            //    await _paymentRepo.AddAsync(payment, cancellationToken);
-            //}
-
-            var resNo = (await _sequenceGenerator.GetNext(cancellationToken)).ToString();
-            payment = new Payment(resNo)
+            if(existingPayment != null)
+                payment = existingPayment;
+            else
             {
-                Amount = invoice.TotalCost,
-                CustomerId = invoice.CustomerId,
-                InvoiceId = invoice.Id,
-                IpgId = ipg.Id,
-                BankAccountId = request.BankAccountId,
-                PostBankAccountId = ipg.PostBankAccountId,
-            };
+                payment = await _createPaymentService.CreatePayment(invoice, ipg, request.BankAccountId, cancellationToken);
+                
+                invoice.SetExpiration(generalPolicy);
+                await _invoiceRepo.UpdateAsync(invoice, cancellationToken);
+                
+                foreach (var item in invoice.InvoiceItems)
+                {
+                    var inventoryItemId = await _inventoryItemReadRepo
+                        .FirstOrDefaultAsync(new InventoryItemIdByProductIdSpec(item.ProductId), cancellationToken);
 
-            invoice.SetExpiration(generalPolicy);
-            foreach (var item in invoice.InvoiceItems)
-            {
-                var inventoryItemId = await _inventoryItemReadRepo
-                    .FirstOrDefaultAsync(new InventoryItemIdByProductIdSpec(item.ProductId), cancellationToken);
-
-                await _inventoryItemReservationService.Reserve(inventoryItemId, item.Quantity, cancellationToken);
+                    await _inventoryItemReservationService.Reserve(inventoryItemId, item.Quantity, cancellationToken);
+                }
             }
 
-            payment.LongInfo("قبض پرداخت ایجاد شد.");
-            await _paymentRepo.AddAsync(payment, cancellationToken);
+
+            var gatewayUrl = await paymentGateway
+                .GetGatewayUrl(invoice,
+                    payment,
+                    ipg.BankAccounts.FirstOrDefault(x => x.Id == request.BankAccountId)!,
+                    ipg.BankAccounts.FirstOrDefault(x => x.IsPost == true),
+                    invoice.MobilePhone);
 
             await _unitOfWork.SaveAndCommitAsync(cancellationToken);
 
-            //var gatewayUrl = await paymentGateway
-            //    .GetGatewayUrl(invoice,
-            //        payment,
-            //        ipg.BankAccounts.FirstOrDefault(x => x.Id == request.BankAccountId)!,
-            //        ipg.BankAccounts.FirstOrDefault(x => x.IsPost == true),
-            //        invoice.MobilePhone);
-
-            return Guid.NewGuid().ToString();
+            return gatewayUrl;
         }, cancellationToken);
         
 

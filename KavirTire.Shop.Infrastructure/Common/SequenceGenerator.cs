@@ -4,11 +4,11 @@ using KavirTire.Shop.Infrastructure.Cache;
 
 namespace KavirTire.Shop.Infrastructure.Common;
 
-public class SequenceGenerator : ISequenceGenerator
+public class SequenceGenerator
 {
     private readonly IEasyCachingProvider _cachingProvider;
     private readonly IDistributedLock _distributedLock;
-    private const string SequenceKey = "sequence";
+    private const string MainSequenceKey = "general";
 
     public SequenceGenerator(IEasyCachingProvider cachingProvider,
         IDistributedLock distributedLock)
@@ -17,24 +17,23 @@ public class SequenceGenerator : ISequenceGenerator
         _distributedLock = distributedLock;
     }
 
+    public async Task<int> GetNext(string key,int startFrom, CancellationToken cancellationToken = new())
+    {
+        return await _distributedLock.Lock($"{key}-seq", async () =>
+        {
+            var seq = await _cachingProvider.GetOrCreateAsync<int>($"{key}-seq", () => startFrom);
+            seq += 1;
+            await _cachingProvider.SetAsync<int>($"{key}-seq", seq, TimeSpan.FromDays(1), cancellationToken);
+            return seq;
+        }, cancellationToken);
+        
+    }
+    public async Task<int> GetNext(int startFrom, CancellationToken cancellationToken = new())
+    {
+        return await GetNext(MainSequenceKey, startFrom, cancellationToken);
+    }
     public async Task<int> GetNext(CancellationToken cancellationToken = new())
     {
-        return await _distributedLock.Lock(SequenceKey, async () =>
-        {
-            var seq = await _cachingProvider.GetOrCreate<int>(SequenceKey, () => 1235);
-            seq += 1;
-            await _cachingProvider.SetAsync<int>(SequenceKey, seq, TimeSpan.FromDays(1), cancellationToken);
-            return seq;
-        }, cancellationToken);
-    }
-    public async Task<int> GetNext(string key,CancellationToken cancellationToken = new())
-    {
-        return await _distributedLock.Lock($"{key}-{SequenceKey}", async () =>
-        {
-            var seq = await _cachingProvider.GetOrCreate<int>($"{key}-{SequenceKey}", () => 1235);
-            seq += 1;
-            await _cachingProvider.SetAsync<int>($"{key}-{SequenceKey}", seq, TimeSpan.FromDays(1), cancellationToken);
-            return seq;
-        }, cancellationToken);
+        return await GetNext(1, cancellationToken);
     }
 }

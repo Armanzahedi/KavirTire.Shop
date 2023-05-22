@@ -1,4 +1,4 @@
-﻿using KavirTire.Shop.Plugins.Core.Resources;
+﻿using KavirTire.Shop.KavirTire.Shop.Plugins.Core.Resources;
 using Microsoft.Xrm.Sdk;
 using Microsoft.Xrm.Sdk.Client;
 

@@ -5,6 +5,7 @@ using KavirTire.Shop.Application.Common.Exceptions;
 using KavirTire.Shop.Application.Common.Persistence;
 using KavirTire.Shop.Application.Common.Services;
 using KavirTire.Shop.Application.Common.Specifications;
+using KavirTire.Shop.Application.Invoices.Specifications;
 using KavirTire.Shop.Application.Products.Specifications;
 using KavirTire.Shop.Domain.Customers;
 using KavirTire.Shop.Domain.GeneralPolicy;
@@ -35,7 +36,6 @@ public class CreateInvoiceCommandHandler : IRequestHandler<CreateInvoiceCommand,
     private readonly IReadRepository<Product> _productRepo;
     private readonly IReadRepository<VehicleType> _vehicleTypeRepo;
     private readonly IUnitOfWork _unitOfWork;
-    private readonly ISequenceGenerator _sequenceGenerator;
 
 
     public CreateInvoiceCommandHandler(
@@ -46,8 +46,7 @@ public class CreateInvoiceCommandHandler : IRequestHandler<CreateInvoiceCommand,
         IReadRepository<Product> productRepo,
         IReadRepository<VehicleType> vehicleTypeRepo,
         IUnitOfWork unitOfWork,
-        GeneralPolicyService generalPolicyService,
-        ISequenceGenerator sequenceGenerator)
+        GeneralPolicyService generalPolicyService)
     {
         _currentUser = currentUser;
         _customerRepo = customerRepo;
@@ -57,7 +56,6 @@ public class CreateInvoiceCommandHandler : IRequestHandler<CreateInvoiceCommand,
         _vehicleTypeRepo = vehicleTypeRepo;
         _unitOfWork = unitOfWork;
         _generalPolicyService = generalPolicyService;
-        _sequenceGenerator = sequenceGenerator;
     }
 
 
@@ -81,7 +79,7 @@ public class CreateInvoiceCommandHandler : IRequestHandler<CreateInvoiceCommand,
         
         var products = await _productRepo.ListAsync(new ProductWithChildrenSpec(), cancellationToken);
 
-        var invoice = new Invoice((await _sequenceGenerator.GetNext("invoice")).ToString())
+        var invoice = new Invoice()
         {
             CustomerId = customer.Id,
             CustomerName = $"{customer.FirstName} {customer.LastName}",
@@ -103,7 +101,7 @@ public class CreateInvoiceCommandHandler : IRequestHandler<CreateInvoiceCommand,
             invoice.AddInvoiceItem(product!,item.Quantity,generalPolicy.PriceListId!.Value,postCost);   
         }
 
-        if (request.ExistingInvoiceId != null)
+        if (request.ExistingInvoiceId != null && await _invoiceRepo.AnyAsync(new InvoiceByIdSpec(request.ExistingInvoiceId.Value), cancellationToken))
         {
             _unitOfWork.BeginTransaction();
             invoice.Id = request.ExistingInvoiceId.Value;

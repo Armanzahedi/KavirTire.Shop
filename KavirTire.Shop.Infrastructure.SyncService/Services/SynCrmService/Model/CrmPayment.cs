@@ -17,8 +17,7 @@ namespace KavirTire.Shop.Infrastructure.SyncService.Services.SynCrmService.Model
         public string SystemTraceNo { get; set; }
         public long? RRN { get; set; }
         public string RefNo { get; set; }
-        public string ResNo { get; }
-        public string ShopResNo { get; }
+        public string ShopResNo { get; set; }
         public string SecurePan { get; set; }
         public List<CrmPaymentLog> PaymentLogs { get; set; }
 

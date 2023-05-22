@@ -1,21 +1,35 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{8ECBB596-7091-4224-AE96-431C143AE6B2}</ProjectGuid>
+    <ProjectGuid>{3471D40E-AE3B-4320-BA35-F2F2C2A881B7}</ProjectGuid>
     <ProjectTypeGuids>{4C25E9B5-9FA6-436c-8E19-B395D2A65FAF};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>KavirTire.Shop.Plugins</RootNamespace>
-    <AssemblyName>KavirTire.Shop.Plugins</AssemblyName>
-    <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
+    <RootNamespace>KavirTire.Shop.KavirTire.Shop.Plugins</RootNamespace>
+    <AssemblyName>KavirTire.Shop.KavirTire.Shop.Plugins</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <!--<TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>-->
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <FileAlignment>512</FileAlignment>
-    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <!--<CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>-->
-    <TargetsForTfmSpecificBuildOutput>$(TargetsForTfmSpecificBuildOutput);GetTfmPublishedFiles</TargetsForTfmSpecificBuildOutput>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -35,25 +49,17 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <PackageId>KavirTire.Shop.Plugins</PackageId>
-    <IsPackable>True</IsPackable>
-    <PackageVersion>1.0.0</PackageVersion>
-    <PackageOutputPath>bin\outputPackages</PackageOutputPath>
-    <PackageTags>plugin</PackageTags>
-    <Authors>Placeholder</Authors>
-    <Description>
-			Placeholder
-		</Description>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>key.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Microsoft.Crm.Sdk.Proxy">
-      <HintPath>..\packages\Microsoft.CrmSdk.CoreAssemblies.9.0.2.48\lib\net462\Microsoft.Crm.Sdk.Proxy.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Xrm.Sdk">
-      <HintPath>..\packages\Microsoft.CrmSdk.CoreAssemblies.9.0.2.48\lib\net462\Microsoft.Xrm.Sdk.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -61,16 +67,18 @@
     <Reference Include="System.ServiceModel" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Runtime.Serialization" />
-    <PackageReference Include="Microsoft.CrmSdk.CoreAssemblies">
-      <Version>9.0.2.48</Version>
-    </PackageReference>
-    <PackageReference Include="NuGet.Build.Tasks.Pack" Version="5.2.0" />
-    <PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies" Version="1.0.0" PrivateAssets="All" />
+    <Reference Include="Microsoft.Xrm.Sdk">
+      <HintPath>$(SolutionDir)packages\Microsoft.CrmSdk.CoreAssemblies.8.0.2.1\lib\net45\Microsoft.Xrm.Sdk.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Crm.Sdk.Proxy">
+      <HintPath>$(SolutionDir)packages\Microsoft.CrmSdk.CoreAssemblies.8.0.2.1\lib\net45\Microsoft.Crm.Sdk.Proxy.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Core\Enums\PipelineStep.cs" />
     <Compile Include="Core\Enums\StatusCode.cs" />
     <Compile Include="Core\Enums\StatusReason.cs" />
+    <Compile Include="Core\Extensions\DateTimeExtensions.cs" />
     <Compile Include="Core\Extensions\EntityExtensions.cs" />
     <Compile Include="Core\Extensions\EntityWrapper.cs" />
     <Compile Include="Core\Extensions\EnumExtensions.cs" />
@@ -78,33 +86,70 @@
     <Compile Include="Core\Extensions\ModelAttribute.cs" />
     <Compile Include="Core\Extensions\ModelAttributeOptionSet.cs" />
     <Compile Include="Core\Helper\CryptographyHelper.cs" />
+    <Compile Include="Core\Helper\HttpHelper.cs" />
     <Compile Include="Core\Helper\MessageResourceHelper.cs" />
     <Compile Include="Core\Models\ActivityParty.cs" />
     <Compile Include="Core\PluginBase.cs" />
     <Compile Include="Core\Repository\EntityRepository.cs" />
     <Compile Include="Core\Repository\EntityRepositoryBase.cs" />
     <Compile Include="Core\Repository\PluginRepository.cs" />
-    <Compile Include="Core\Resources\PluginResource.Designer.cs">
-      <DesignTime>True</DesignTime>
+    <Compile Include="Core\Resources\PluginResource1.Designer.cs">
       <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
       <DependentUpon>PluginResource.resx</DependentUpon>
     </Compile>
+    <Compile Include="Entities\Barcode.cs" />
+    <Compile Include="Entities\GeneralPolicy.cs" />
+    <Compile Include="Entities\OnlinePayment.cs" />
+    <Compile Include="Entities\OnlinePaymentLog.cs" />
+    <Compile Include="Entities\Product.cs" />
+    <Compile Include="Entities\Quote.cs" />
+    <Compile Include="Entities\QuoteProduct.cs" />
+    <Compile Include="Enums\QuoteStatus.cs" />
+    <Compile Include="Enums\QuoteStatusReason.cs" />
+    <Compile Include="Models\CrmPayment.cs" />
+    <Compile Include="Models\CrmQuote.cs" />
+    <Compile Include="Models\CrmQuoteProduct.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repositories\BarcodeRepository.cs" />
+    <Compile Include="Repositories\GeneralPolicyRepository.cs" />
+    <Compile Include="Repositories\OnlinePaymentRepository.cs" />
+    <Compile Include="Repositories\ProductRepository.cs" />
+    <Compile Include="Repositories\QuoteRepository.cs" />
+    <Compile Include="SyncQuoteOrderPaymentWithShopPlugin.cs" />
+    <Compile Include="SyncShopWithCRMPlugin.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Models\" />
+    <None Include="key.snk" />
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Core\Resources\PluginResource.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>PluginResource.Designer.cs</LastGenOutput>
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>PluginResource1.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
-  <Target Name="GetTfmPublishedFiles">
-    <Message Text="GetTfmPublishedFiles from: $(OutputPath)" />
-    <ItemGroup>
-      <BuildOutputInPackage Include="$(OutputPath)\*.*" Exclude="$(OutputPath)\microsoft.xrm.sdk*" />
-    </ItemGroup>
-  </Target>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.5.2">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4.5.2 %28x86 and x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
 </Project>

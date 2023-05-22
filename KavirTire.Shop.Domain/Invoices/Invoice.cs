@@ -8,12 +8,9 @@ namespace KavirTire.Shop.Domain.Invoices;
 
 public class Invoice : EntityBase<Guid>, IAggregateRoot
 {
-    private Invoice()
+    public Invoice()
     {
 
-    }
-    public Invoice(string invoiceNumber) {
-        //this.InvoiceNumber = invoiceNumber;
     }
 
     public Invoice(Guid id)
@@ -28,7 +25,6 @@ public class Invoice : EntityBase<Guid>, IAggregateRoot
     public string? MobilePhone { get; set; }
     public string? Vehicle { get; set; }
     public string? RegistrationPlate { get; set; }
-    //public string InvoiceNumber{ get; set; }
     public decimal TotalPostCost { get; set; }
     public decimal TotalInventoryItemCost { get; set; }
 
@@ -55,12 +51,12 @@ public class Invoice : EntityBase<Guid>, IAggregateRoot
             ProductImageUrl = product.MainImage?.ImageUrl ?? "/not-found.png",
             Quantity = quantity,
             InventoryItemId = product.GetInventory()!.Id,
-            Amount = product.GetPrice(priceListId),
+            Price = product.GetPrice(priceListId),
             PostCost = postCost
         };
      _invoiceItems.Add(inventoryItem);
      TotalPostCost += inventoryItem.TotalPostCost;
-     TotalInventoryItemCost += inventoryItem.TotalAmount;
+     TotalInventoryItemCost += inventoryItem.TotalPrice;
     }
 
     public void SetExpiration(GeneralPolicy.GeneralPolicy generalPolicy)

@@ -6,14 +6,11 @@ using KavirTire.Shop.Domain.Payments.Enums;
 namespace KavirTire.Shop.Domain.Payments;
 public class Payment : EntityBase<Guid> , IAggregateRoot
 {
-    private Payment()
+    public Payment()
     {
         
     }
-    public Payment(string resNo)
-    {
-        this.ResNo = resNo;
-    }
+
     public decimal Amount { get; set; }
     public Guid CustomerId { get; set; }
     public Guid InvoiceId { get; set; }
@@ -28,7 +25,7 @@ public class Payment : EntityBase<Guid> , IAggregateRoot
     public string? SystemTraceNo { get; set; }
     public long? RRN { get; set; }
     public string? RefNo { get; set; }
-    public string ResNo { get; }
+    public string ResNo { get; set; }
     public string? SecurePan { get; set; }
 
     private readonly List<PaymentLog> _paymentLogs = new();

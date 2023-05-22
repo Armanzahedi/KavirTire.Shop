@@ -63,7 +63,7 @@ public class AppDbContext : DbContext
     public DbSet<InvoiceItem> InvoiceItems => Set<InvoiceItem>();
     public DbSet<Ipg> Ipg => Set<Ipg>();
     public DbSet<BankAccount> BankAccounts => Set<BankAccount>();
-    public DbSet<Payment> Payments => Set<Payment>();
+    public DbSet<Domain.Payments.Payment> Payments => Set<Domain.Payments.Payment>();
     public DbSet<PaymentLog> PaymentLogs => Set<PaymentLog>();
     
     public DbSet<WebFile> WebFiles => Set<WebFile>();

@@ -285,6 +285,15 @@
     <data name="Contact_ConfirmPurchaseHistory" xml:space="preserve">
     <value>bmsd_confirmpurchasehistory</value>
   </data>
+    <data name="Contact_VersionNumber" xml:space="preserve">
+    <value>versionnumber</value>
+  </data>
+    <data name="Order_VersionNumber" xml:space="preserve">
+    <value>versionnumber</value>
+  </data>
+    <data name="Contact_AdxUsername" xml:space="preserve">
+    <value>adx_identity_username</value>
+  </data>
     <data name="PersonalDoc" xml:space="preserve">
     <value>bmsd_personaldoc</value>
   </data>
@@ -395,5 +404,11 @@
   </data>
   <data name="GeneralPolicy_ExpireQuoteForCookieMin" xml:space="preserve">
     <value>bmsd_expireqouteforcookymin</value>
+  </data>
+  <data name="Quote" xml:space="preserve">
+    <value>quote</value>
+  </data>
+  <data name="Quote_Id" xml:space="preserve">
+    <value>quoteid</value>
   </data>
 </root>

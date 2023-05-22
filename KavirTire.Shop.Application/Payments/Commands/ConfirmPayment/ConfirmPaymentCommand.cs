@@ -2,7 +2,7 @@
 using KavirTire.Shop.Application.Common.Persistence;
 using KavirTire.Shop.Application.Common.Specifications;
 using KavirTire.Shop.Application.InventoryItems.Services;
-using KavirTire.Shop.Application.Payments.Services.PaymentService;
+using KavirTire.Shop.Application.Payments.Services.PaymentGateway;
 using KavirTire.Shop.Application.Payments.Specifications;
 using KavirTire.Shop.Domain.InventoryItems;
 using KavirTire.Shop.Domain.Invoices;
@@ -20,7 +20,7 @@ public record ConfirmPaymentCommand(Guid IpgId, Guid PaymentId, Guid InvoiceId,
 public class ConfirmPaymentCommandHandler : IRequestHandler<ConfirmPaymentCommand, ConfirmPaymentCommandResult?>
 {
     private readonly IReadRepository<Ipg> _ipgRepo;
-    private readonly IPaymentServiceFactory _paymentServiceFactory;
+    private readonly IPaymentGatewayFactory _paymentGatewayFactory;
     private readonly IInvoiceRepository _invoiceReadRepo;
     private readonly IRepository<Invoice> _invoiceRepo;
     private readonly IRepository<Payment> _paymentRepo;
@@ -31,7 +31,7 @@ public class ConfirmPaymentCommandHandler : IRequestHandler<ConfirmPaymentComman
     private readonly InventoryItemReservationService _inventoryItemReservationService;
 
 
-    public ConfirmPaymentCommandHandler(IPaymentServiceFactory paymentServiceFactory,
+    public ConfirmPaymentCommandHandler(IPaymentGatewayFactory paymentGatewayFactory,
         IReadRepository<Ipg> ipgRepo,
         IInvoiceRepository invoiceReadRepo,
         IRepository<Invoice> invoiceRepo,
@@ -41,7 +41,7 @@ public class ConfirmPaymentCommandHandler : IRequestHandler<ConfirmPaymentComman
         InventoryItemReservationService inventoryItemReservationService,
         IRepository<Payment> paymentRepo)
     {
-        _paymentServiceFactory = paymentServiceFactory;
+        _paymentGatewayFactory = paymentGatewayFactory;
         _ipgRepo = ipgRepo;
         _invoiceReadRepo = invoiceReadRepo;
         _invoiceRepo = invoiceRepo;
@@ -61,7 +61,7 @@ public class ConfirmPaymentCommandHandler : IRequestHandler<ConfirmPaymentComman
 
             var ipg = await _ipgRepo.GetByIdAsync(request.IpgId, cancellationToken);
             var payment = await _paymentRepo.GetByIdAsync(request.PaymentId, cancellationToken);
-            var paymentService = _paymentServiceFactory.Create(ipg!);
+            var paymentService = _paymentGatewayFactory.Create(ipg!);
 
             _unitOfWork.BeginTransaction();
 

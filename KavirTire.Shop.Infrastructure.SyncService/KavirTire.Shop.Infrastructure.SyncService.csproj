@@ -327,6 +327,7 @@
         <Compile Include="CRM\Repository\PostCostCategoryCrmRepository.cs" />
         <Compile Include="CRM\Repository\PriceListCrmRepository.cs" />
         <Compile Include="CRM\Repository\ProductCrmRepository.cs" />
+        <Compile Include="CRM\Repository\QuoteCrmRepository.cs" />
         <Compile Include="CRM\Repository\VehicleCrmRepository.cs" />
         <Compile Include="CRM\Repository\VehicleTypeCrmRepository.cs" />
         <Compile Include="CRM\Repository\WebPageCrmRepository.cs" />
@@ -371,8 +372,10 @@
         <Compile Include="Shop\Models\WebFile.cs" />
         <Compile Include="Shop\Models\WebPage.cs" />
         <Compile Include="Shop\Persistence\AppDbContext.cs" />
+        <Compile Include="Shop\Persistence\CustomerRepository.cs" />
         <Compile Include="Shop\Persistence\EfRepository.cs" />
         <Compile Include="Shop\Persistence\IShopRepository.cs" />
+        <Compile Include="Shop\Persistence\OrderHistoryRepository.cs" />
         <Compile Include="Startup.cs" />
         <Compile Include="WindowsService.cs" />
     </ItemGroup>

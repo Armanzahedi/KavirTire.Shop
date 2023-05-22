@@ -20,7 +20,6 @@ namespace KavirTire.Shop.Infrastructure.SyncService.Shop.Persistence
         {
             _dbContext.Set<T>().AddOrUpdate(a=>a.Id,entity);
         }
-
         public async  Task AddOrUpdateAsync(T entity)
         {
             _dbContext.Set<T>().AddOrUpdate(a=>a.Id,entity);

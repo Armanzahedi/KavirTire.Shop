@@ -5,9 +5,9 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace KavirTire.Shop.Infrastructure.Persistence.Configurations;
 
-public class PaymentConfiguration: BaseEntityTypeConfiguration<Payment>
+public class PaymentConfiguration: BaseEntityTypeConfiguration<Domain.Payments.Payment>
 {
-    public override void Configure(EntityTypeBuilder<Payment> builder)
+    public override void Configure(EntityTypeBuilder<Domain.Payments.Payment> builder)
     {
         builder.HasMany(p => p.PaymentLogs)
             .WithOne()

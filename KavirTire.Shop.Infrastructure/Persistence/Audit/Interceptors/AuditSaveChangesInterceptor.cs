@@ -7,14 +7,11 @@ namespace KavirTire.Shop.Infrastructure.Persistence.Audit.Interceptors;
 
 public class AuditSaveChangesInterceptor : SaveChangesInterceptor
 {
-    private readonly ICurrentUser _currentUser;
     private readonly IDateTimeProvider _dateTime;
 
     public AuditSaveChangesInterceptor(
-        ICurrentUser currentUser,
         IDateTimeProvider dateTime)
     {
-        _currentUser = currentUser;
         _dateTime = dateTime;
     }
 
@@ -44,13 +41,13 @@ public class AuditSaveChangesInterceptor : SaveChangesInterceptor
         {
             if (entry.State == EntityState.Added)
             {
-                entry.Entity.CreatedBy = _currentUser.UserId;
+                entry.Entity.CreatedBy = "";
                 entry.Entity.CreatedOn = _dateTime.UtcNow;
             } 
 
             if (entry.State == EntityState.Added || entry.State == EntityState.Modified || entry.HasChangedOwnedEntities())
             {
-                entry.Entity.LastModifiedBy = _currentUser.UserId;
+                entry.Entity.LastModifiedBy = "";
                 entry.Entity.LastModifiedOn = _dateTime.UtcNow;
             }
         }

@@ -15,8 +15,8 @@ namespace KavirTire.Shop.Infrastructure.SyncService.Shop.Models.Invoice.Entities
         public string ProductImageUrl { get; set; } = "/not-found/png";
 
         public int Quantity { get; set; }
-        public decimal Amount { get; set; }
-        public decimal TotalAmount => Amount * Quantity;
+        public decimal Price { get; set; }
+        public decimal TotalPrice => Price * Quantity;
         public decimal TotalPostCost => PostCost * Quantity;
         public decimal PostCost { get; set; }
     }

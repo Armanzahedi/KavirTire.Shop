@@ -28,6 +28,9 @@ namespace KavirTire.Shop.Infrastructure.Persistence.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<long?>("CrmRowVersion")
+                        .HasColumnType("bigint");
+
                     b.Property<string>("FirstName")
                         .HasColumnType("nvarchar(max)");
 
@@ -51,6 +54,9 @@ namespace KavirTire.Shop.Infrastructure.Persistence.Migrations
 
                     b.Property<Guid?>("ProvinceId")
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Username")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -229,9 +235,6 @@ namespace KavirTire.Shop.Infrastructure.Persistence.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<decimal>("Amount")
-                        .HasColumnType("decimal(18,4)");
-
                     b.Property<Guid>("InventoryItemId")
                         .HasColumnType("uniqueidentifier");
 
@@ -239,6 +242,9 @@ namespace KavirTire.Shop.Infrastructure.Persistence.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<decimal>("PostCost")
+                        .HasColumnType("decimal(18,4)");
+
+                    b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,4)");
 
                     b.Property<Guid>("ProductId")
@@ -352,6 +358,9 @@ namespace KavirTire.Shop.Infrastructure.Persistence.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<long?>("CrmRowVersion")
+                        .HasColumnType("bigint");
+
                     b.Property<Guid>("CustomerId")
                         .HasColumnType("uniqueidentifier");
 
@@ -439,6 +448,10 @@ namespace KavirTire.Shop.Infrastructure.Persistence.Migrations
                         .HasColumnType("bigint");
 
                     b.Property<string>("RefNo")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ResNo")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("SecurePan")

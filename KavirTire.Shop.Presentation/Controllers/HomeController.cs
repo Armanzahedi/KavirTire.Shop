@@ -11,26 +11,26 @@ using KavirTire.Shop.Domain.VehicleTypes.Enums;
 using KavirTire.Shop.Domain.WebPages;
 using KavirTire.Shop.Presentation.Filters;
 using KavirTire.Shop.Presentation.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace KavirTire.Shop.Presentation.Controllers;
 
+[TermsOfServiceApprovedFilter]
+[TypeFilter(typeof(CustomerValidForPurchaseFilterAttribute))]
 public class HomeController : BaseController
 {
     private readonly ILogger<HomeController> _logger;
     private readonly GeneralPolicyService _generalPolicyService;
-    private readonly IReadRepository<OrderHistory> _orderHistoryRepo;
 
     public HomeController(ILogger<HomeController> logger,
-        GeneralPolicyService generalPolicyService,
-        IReadRepository<OrderHistory> orderHistoryRepo)
+        GeneralPolicyService generalPolicyService)
     {
         _logger = logger;
         _generalPolicyService = generalPolicyService;
-        _orderHistoryRepo = orderHistoryRepo;
     }
 
-    // [TermsOfServiceApprovedFilter]
+    [Authorize]
     public async Task<IActionResult> Index()
     {
         var generalPolicy = await _generalPolicyService.GetGeneralPolicy();
@@ -79,7 +79,6 @@ public class HomeController : BaseController
         return Ok(new SubmitCartResult { InvoiceId = invoiceId });
     }
 
-    [TermsOfServiceApprovedFilter]
     [Route("purchase-summary/{invoiceId}")]
     public async Task<IActionResult> PurchaseSummary(Guid invoiceId)
     {

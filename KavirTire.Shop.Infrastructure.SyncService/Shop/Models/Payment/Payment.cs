@@ -23,7 +23,7 @@ namespace KavirTire.Shop.Infrastructure.SyncService.Shop.Models.Payment
         public string SystemTraceNo { get; set; }
         public long? RRN { get; set; }
         public string RefNo { get; set; }
-        public string ResNo { get; }
+        public string ResNo { get;set; }
         public string SecurePan { get; set; }
         
         public ICollection<PaymentLog> PaymentLogs { get; set; }

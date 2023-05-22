@@ -38,8 +38,8 @@ public class PaymentController : BaseController
 
     [HttpPost]
     [AllowAnonymous]
-    [Route("payment/verification")]
-    public async Task<ActionResult> Verification([FromBody] Dictionary<string,string?> bankResponse,[FromQuery] Guid ipg,[FromQuery] Guid pmnt,[FromQuery] Guid inv)
+    [Route("payment/verification/sep")]
+    public async Task<ActionResult> VerificationSamanKish(Dictionary<string,string?> bankResponse,[FromQuery] Guid ipg,[FromQuery] Guid pmnt,[FromQuery] Guid inv)
     {
         var verificationResponse = await Mediator.Send(new ConfirmPaymentCommand(ipg, pmnt, inv, bankResponse));
         TempData["Status"] = verificationResponse.IsSuccessful;
@@ -48,6 +48,17 @@ public class PaymentController : BaseController
         return RedirectToAction("Confirmation");
     }
 
+    [HttpPost]
+    [AllowAnonymous]
+    [Route("payment/verification/irankish")]
+    public async Task<ActionResult> VerificationIranKish([FromBody] Dictionary<string,string?> bankResponse,[FromQuery] Guid ipg,[FromQuery] Guid pmnt,[FromQuery] Guid inv)
+    {
+        var verificationResponse = await Mediator.Send(new ConfirmPaymentCommand(ipg, pmnt, inv, bankResponse));
+        TempData["Status"] = verificationResponse.IsSuccessful;
+        TempData["Message"] = verificationResponse.Message;
+        TempData["TracNo"] = verificationResponse.TraceNo;
+        return RedirectToAction("Confirmation");
+    }
     [Route("payment/confirmation")]
     public IActionResult Confirmation()
     {
@@ -59,6 +70,6 @@ public class PaymentController : BaseController
             IsSuccessful = (bool)TempData["Status"],
             Message = (string?)TempData["Message"] ?? "",
             TraceNo = (string?)TempData["TracNo"] ?? ""
-        });
+        });   
     }
 }

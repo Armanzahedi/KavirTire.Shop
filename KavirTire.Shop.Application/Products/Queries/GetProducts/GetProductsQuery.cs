@@ -36,7 +36,6 @@ public class GetProductsQueryHandler : IRequestHandler<GetProductsQuery, GetProd
     {
         var products = await _productRepo.ListAsync(new ProductWithChildrenSpec(), cancellationToken);
         var generalPolicy = await _generalPolicyService.GetGeneralPolicy(cancellationToken);
-
         Guard.Against.Null(generalPolicy, nameof(generalPolicy));
 
         Vehicle? vehicle;
@@ -46,11 +45,15 @@ public class GetProductsQueryHandler : IRequestHandler<GetProductsQuery, GetProd
             Guard.Against.Null(_currentUser.UserId, "Current UserId");
 
             vehicle = await _vehicleRepo.FirstOrDefaultAsync(new VehicleByCustomerId(_currentUser.UserId.Value), cancellationToken);
-            Guard.Against.Null(vehicle, "Customer's Vehicle");
-            Guard.Against.Null(vehicle.VehicleTypeId, "Vehicle's VehicleType");
 
-            vehicleType = await _vehicleTypeRepo.GetByIdAsync(vehicle.VehicleTypeId.Value, cancellationToken);
-            products = products.Where(x => x.VehicleTypeProducts.Any(v => v.VehicleTypeId == vehicle.VehicleTypeId)).ToList();
+            if (vehicle?.VehicleTypeId != null)
+            {
+                vehicleType = await _vehicleTypeRepo.GetByIdAsync(vehicle.VehicleTypeId.Value, cancellationToken);
+                products = products.Where(x => x.VehicleTypeProducts.Any(v => v.VehicleTypeId == vehicle.VehicleTypeId)).ToList();
+            }
+            else
+                products = new List<Product>();
+
         }
 
         return new GetProductsQueryResult

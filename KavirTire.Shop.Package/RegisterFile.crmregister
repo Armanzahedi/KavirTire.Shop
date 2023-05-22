@@ -1,4 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Register xmlns="http://schemas.microsoft.com/crm/2011/tools/pluginregistration">
-  <Solutions />
+<Register xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://schemas.microsoft.com/crm/2011/tools/pluginregistration">
+  <Solutions>
+    <Solution Assembly="KavirTire.Shop.KavirTire.Shop.Plugins.dll" Id="4326fb46-ab67-4a73-824e-99e6413b4587" IsolationMode="None" SourceType="Database">
+      <PluginTypes>
+        <clear />
+        <Plugin Description="Plug-in to KavirTire.Shop.Plugins.SyncQuoteOrderPaymentWithShop" FriendlyName="KavirTire.Shop.Plugins.SyncQuoteOrderPaymentWithShop" Name="KavirTire.Shop.KavirTire.Shop.Plugins.SyncQuoteOrderPaymentWithShopPlugin" Id="7ce8a77a-9f6b-4749-8b09-b0ce56a452ab" TypeName="KavirTire.Shop.KavirTire.Shop.Plugins.SyncQuoteOrderPaymentWithShopPlugin">
+          <Steps>
+            <clear />
+            <Step AsyncAutoDelete="false" Name="KavirTire.Shop.Plugins.SyncQuoteOrderPaymentWithShop" Description="KavirTire.Shop.Plugins.SyncQuoteOrderPaymentWithShop" Id="957e3e32-a4ec-ed11-81e7-0050569abf13" ImpersonatingUserId="00000000-0000-0000-0000-000000000000" MessageName="bmsd_KavireTireSyncQuoteOrderPaymentWithShop" Mode="Synchronous" PrimaryEntityName="none" Rank="10" Stage="PostOutsideTransaction" SupportedDeployment="ServerOnly" MessageEntityId="00000000-0000-0000-0000-000000000000">
+              <Images />
+            </Step>
+          </Steps>
+        </Plugin>
+        <Plugin Description="Plug-in to KavirTire.Shop.Plugins.SyncShopWithCRM" FriendlyName="KavirTire.Shop.Plugins.SyncShopWithCRM" Name="KavirTire.Shop.KavirTire.Shop.Plugins.SyncShopWithCRMPlugin" Id="ddb63776-7a2f-44d6-9e99-402e472e8f6c" TypeName="KavirTire.Shop.KavirTire.Shop.Plugins.SyncShopWithCRMPlugin">
+          <Steps>
+            <clear />
+            <Step AsyncAutoDelete="false" Name="KavirTire.Shop.Plugins.SyncShopWithCRM" Description="KavirTire.Shop.Plugins.SyncShopWithCRM" Id="8ae60d69-7bf1-ed11-81e7-0050569abf13" ImpersonatingUserId="00000000-0000-0000-0000-000000000000" MessageName="bmsd_KavirTireSyncShopWithCRM" Mode="Synchronous" PrimaryEntityName="none" Rank="10" Stage="PreInsideTransaction" SupportedDeployment="ServerOnly" MessageEntityId="00000000-0000-0000-0000-000000000000">
+              <Images />
+            </Step>
+          </Steps>
+        </Plugin>
+      </PluginTypes>
+    </Solution>
+  </Solutions>
+  <XamlWorkflows />
 </Register>

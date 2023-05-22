@@ -3,13 +3,13 @@
     ViewData["Title"] = "پرداخت";
 }
 
-<section id="secPaymentConfirmation">
-    <div class="row">
+<section>
+    <div style="display:flex;justify-content: center;flex-direction: column;align-items: center">
 
-        <div class="col-md-12">
-                <img src='/assets/@(Model.IsSuccessful? "check.png" : "cancel.png")'>
+        <div style="padding: 10px">
+                <img src='/assets/@(Model.IsSuccessful? "check.png" : "cancel.png")' style="max-width: 130px">
         </div>
-        <div class="col-md-12 d-flex flex-column justify-content-center align-items-center">
+        <div style="padding: 10px; justify-content: center;flex-direction: column;align-items: center">
             @if (Model.IsSuccessful)
             {
                 <h3>عملیات با موفقیت انجام شد</h3>
@@ -20,14 +20,14 @@
             }
             <h5>@Html.Raw(Model.Message)</h5>
         </div>
-        <div class="col-md-12">
+        <div class="m-4">
 
             @if (string.IsNullOrWhiteSpace(Model.TraceNo) == false)
             {
                 <h4>شماره پیگیری : @Model.TraceNo</h4>
             }
         </div>
-        <div class="col-md-12">
+        <div style="padding: 10px">
             <a href="@(KavirTireOptions.Value.PortalAddress)/profile" class="btn btn-info">بازگشت به پروفایل</a>
         </div>
 

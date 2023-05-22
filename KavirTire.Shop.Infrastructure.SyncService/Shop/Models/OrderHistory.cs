@@ -11,5 +11,7 @@ namespace KavirTire.Shop.Infrastructure.SyncService.Shop.Models
         public Guid OrderId { get; set; }
         public int TotalQuantity { get; set; }
         public DateTime? RegistrationDate { get; set; }
+        public long? CrmRowVersion { get; set; }
+        
     }
 }

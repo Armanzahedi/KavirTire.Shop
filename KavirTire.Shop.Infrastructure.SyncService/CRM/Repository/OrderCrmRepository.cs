@@ -14,11 +14,14 @@ namespace KavirTire.Shop.Infrastructure.SyncService.CRM.Repository
         {
         }
         
-        public List<Order> GetAllOrders()
+        
+        
+        public List<Order> GetAllOrders(long? lastRowVersion = null)
         {
             var query = new QueryExpression(CrmResource.Order)
             {
-                ColumnSet = new ColumnSet(CrmResource.Order_RegistrationDate,CrmResource.Order_TotalQuantity,CrmResource.Order_Customer),
+                ColumnSet = new ColumnSet(CrmResource.Order_RegistrationDate,CrmResource.Order_TotalQuantity,CrmResource.Order_Customer,
+                    CrmResource.Order_VersionNumber),
                 Criteria = new FilterExpression()
                 {
                     Conditions =
@@ -28,6 +31,10 @@ namespace KavirTire.Shop.Infrastructure.SyncService.CRM.Repository
                 }
             };
 
+            if (lastRowVersion != null)
+                query.Criteria.Conditions.Add(new ConditionExpression(CrmResource.Order_VersionNumber, ConditionOperator.GreaterThan, lastRowVersion));
+            
+            
             return GetMoreThan5000WithQueryExpression(query)?.Select(e=>e.ToEntity<Order>()).ToList();
         }
     }

@@ -23,6 +23,8 @@ namespace KavirTire.Shop.Infrastructure.SyncService
             services.AddScoped<AppDbContext>();
             services.AddScoped(typeof(IShopReadRepository<>), typeof(EfRepository<>));
             services.AddScoped(typeof(IShopRepository<>), typeof(EfRepository<>));
+            services.AddScoped(typeof(CustomerRepository));
+            services.AddScoped(typeof(OrderHistoryRepository));
             services.AddScoped(typeof(DataMigrationService));
             services.AddScoped<ICrmSettingManager, CrmSettingsManager>();
             services.AddCrmRepositories();

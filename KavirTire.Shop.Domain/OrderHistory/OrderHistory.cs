@@ -9,4 +9,6 @@ public class OrderHistory : EntityBase<Guid>, IAggregateRoot
     public Guid OrderId { get; set; }
     public int TotalQuantity { get; set; }
     public DateTime? RegistrationDate { get; set; }
+    
+    public long? CrmRowVersion { get; set; }
 }

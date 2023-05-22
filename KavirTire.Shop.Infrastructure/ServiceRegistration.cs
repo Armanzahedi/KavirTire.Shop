@@ -3,15 +3,17 @@ using KavirTire.Shop.Application.Common;
 using KavirTire.Shop.Application.Common.Cache;
 using KavirTire.Shop.Application.Common.Persistence;
 using KavirTire.Shop.Application.Common.Services;
+using KavirTire.Shop.Application.Payments.Services;
+using KavirTire.Shop.Application.Payments.Services.PaymentGateway;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using KavirTire.Shop.Application.Payments.Services.PaymentService;
 using KavirTire.Shop.Domain.InventoryItems;
 using KavirTire.Shop.Infrastructure.Cache;
 using KavirTire.Shop.Infrastructure.Common;
 using KavirTire.Shop.Infrastructure.Identity;
-using KavirTire.Shop.Infrastructure.PaymentService;
+using KavirTire.Shop.Infrastructure.Payment;
+using KavirTire.Shop.Infrastructure.Payment.PaymentGateway;
 using KavirTire.Shop.Infrastructure.Persistence.Audit.Interceptors;
 using KavirTire.Shop.Infrastructure.Persistence.Common;
 using KavirTire.Shop.Infrastructure.Persistence.Repository;
@@ -58,11 +60,13 @@ public static class ServiceRegistration
         services.AddScoped<IUnitOfWork, UnitOfWork>();
         services.AddScoped<IDistributedLock, DistributedLock>();
         
-        services.AddScoped<IPaymentServiceFactory, PaymentServiceFactory>();
-        services.AddScoped<ISequenceGenerator, SequenceGenerator>();
+        services.AddScoped<IPaymentGatewayFactory, PaymentGatewayFactory>();
+        services.AddScoped<ICreatePaymentService, CreatePaymentService>();
+        services.AddScoped<SequenceGenerator>();
 
         services.Configure<RedisOptions>(configuration.GetSection(RedisOptions.Redis));
         services.Configure<DistributedLockOptions>(configuration.GetSection(DistributedLockOptions.DistributedLock));
+        services.Configure<PaymentOptions>(configuration.GetSection(PaymentOptions.Payment));
 
         services.AddRecurringJobService(configuration);
         
@@ -91,6 +95,7 @@ public static class ServiceRegistration
             .WithCompressor("mymsgpack", "lz4");
         });
 
+        services.AddAuthentication(configuration);
         return services;
     }
 }

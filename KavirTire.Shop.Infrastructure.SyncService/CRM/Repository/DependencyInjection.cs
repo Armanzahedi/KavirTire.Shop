@@ -19,6 +19,7 @@ namespace KavirTire.Shop.Infrastructure.SyncService.CRM.Repository
             services.AddScoped<OrderCrmRepository>();
             services.AddScoped<WebPageCrmRepository>();
             services.AddScoped<IpgCrmRepository>();
+            services.AddScoped<QuoteCrmRepository>();
             
             return services;
         }

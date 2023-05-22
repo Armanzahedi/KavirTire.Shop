@@ -4,9 +4,9 @@
 }
 <p>@Html.Raw(Model.WebPage.Data)</p>
 
-<div class="px-4 pb-5">
+<div class="px-4 pb-5 approve-container">
     <input type="checkbox" id="accept-tof" />
-    <span for="accept-tof">شرایط فوق را به صورت کامل مطالعه و با آگاهی کامل مفاد آن را تایید می نمایم.</span>
+    <span for="accept-tof" class="accept-tof">شرایط فوق را به صورت کامل مطالعه و با آگاهی کامل مفاد آن را تایید می نمایم.</span>
     <div class="text-center pt-3">
         <a class="btn btn-OnlineSaleInformation disabled" href="#" id="shopping-btn">
             <i class="fa fa-shopping-basket"></i> آغاز فرآیند خرید
@@ -14,7 +14,43 @@
     </div>
 </div>
 
-
+<style>
+    .row {
+    text-align: center;
+    }
+    .approve-container{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding-bottom: 100px;
+        padding-top: 20px;
+        
+    }
+    #OnlineSaleInformation {
+                padding: 50px;
+                border: 1px solid blue;
+                border-radius: 30px;
+    }
+    .btn-OnlineSaleInformation {
+        font-size: 16px;
+        padding: .375rem .55rem;
+        color: #ed1c29;
+        border: 3px solid #ed1c29;
+        border-radius: 14px;
+    }
+    
+        .btn-OnlineSaleInformation:hover {
+            font-size: 16px;
+            padding: .375rem .55rem;
+            color: #ffffff;
+            background: #ed1c29;
+            border: 3px solid #ed1c29;
+            border-radius: 14px;
+        }
+        .accept-tof {
+        padding: 10px;
+        }
+</style>
 @section Scripts{
     <script>
         $(document).ready(function() {

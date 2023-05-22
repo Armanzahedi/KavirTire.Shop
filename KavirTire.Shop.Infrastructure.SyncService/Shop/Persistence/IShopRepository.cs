@@ -16,6 +16,7 @@ namespace KavirTire.Shop.Infrastructure.SyncService.Shop.Persistence
         
         /// <summary>Deletes All af the records.</summary>
         Task DeleteObsoleteRecords();
+
     }
 
     public interface IShopReadRepository<T> : IReadRepositoryBase<T> where T : class

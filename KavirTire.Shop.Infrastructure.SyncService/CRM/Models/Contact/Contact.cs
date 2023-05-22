@@ -107,7 +107,26 @@ namespace KavirTire.Shop.Infrastructure.SyncService.CRM.Models.Contact
                 value.AttributeName = CrmResource.Contact_ConfirmPurchaseHistory;
             }
         }
-
+        public ModelAttribute<long> VersionNumber
+        {
+            get => new ModelAttribute<long>(this, CrmResource.Contact_VersionNumber);
+            set
+            {
+                this.SetAttributeValue(CrmResource.Contact_VersionNumber, value.Value);
+                value.Entity = this;
+                value.AttributeName = CrmResource.Contact_VersionNumber;
+            }
+        }
+        public ModelAttribute<string> AdxUsername
+        {
+            get => new ModelAttribute<string>(this, CrmResource.Contact_AdxUsername);
+            set
+            {
+                this.SetAttributeValue(CrmResource.Contact_AdxUsername, value.Value);
+                value.Entity = this;
+                value.AttributeName = CrmResource.Contact_AdxUsername;
+            }
+        }
         public bool IsApprovedForPurchase { get; set; }
     }
 }

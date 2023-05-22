@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using Microsoft.Xrm.Sdk;
 using Microsoft.Xrm.Sdk.Messages;
 using KavirTire.Shop.Plugins.Core.Extensions;
-using KavirTire.Shop.Plugins.Core.Resources;
+using KavirTire.Shop.KavirTire.Shop.Plugins.Core.Resources;
 
 namespace KavirTire.Shop.Plugins.Core.Repository
 {

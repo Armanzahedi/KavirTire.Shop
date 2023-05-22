@@ -168,6 +168,15 @@ namespace KavirTire.Shop.Infrastructure.SyncService.CRM.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to adx_identity_username.
+        /// </summary>
+        internal static string Contact_AdxUsername {
+            get {
+                return ResourceManager.GetString("Contact_AdxUsername", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to bmsd_confirmpurchasehistory.
         /// </summary>
         internal static string Contact_ConfirmPurchaseHistory {
@@ -245,6 +254,15 @@ namespace KavirTire.Shop.Infrastructure.SyncService.CRM.Resources {
         internal static string Contact_Province {
             get {
                 return ResourceManager.GetString("Contact_Province", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to versionnumber.
+        /// </summary>
+        internal static string Contact_VersionNumber {
+            get {
+                return ResourceManager.GetString("Contact_VersionNumber", resourceCulture);
             }
         }
         
@@ -708,6 +726,15 @@ namespace KavirTire.Shop.Infrastructure.SyncService.CRM.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to versionnumber.
+        /// </summary>
+        internal static string Order_VersionNumber {
+            get {
+                return ResourceManager.GetString("Order_VersionNumber", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to bmsd_personaldoc.
         /// </summary>
         internal static string PersonalDoc {
@@ -929,6 +956,24 @@ namespace KavirTire.Shop.Infrastructure.SyncService.CRM.Resources {
         internal static string ProductImage_WebFile {
             get {
                 return ResourceManager.GetString("ProductImage_WebFile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to quote.
+        /// </summary>
+        internal static string Quote {
+            get {
+                return ResourceManager.GetString("Quote", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to quoteid.
+        /// </summary>
+        internal static string Quote_Id {
+            get {
+                return ResourceManager.GetString("Quote_Id", resourceCulture);
             }
         }
         

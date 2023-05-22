@@ -7,6 +7,7 @@ using KavirTire.Shop.Infrastructure.SyncService.CRM.Repository;
 using KavirTire.Shop.Infrastructure.SyncService.Shop.Models;
 using KavirTire.Shop.Infrastructure.SyncService.Shop.Persistence;
 using NLog;
+using NLog.Fluent;
 using GeneralPolicy = KavirTire.Shop.Infrastructure.SyncService.Shop.Models.GeneralPolicy;
 using InventoryItem = KavirTire.Shop.Infrastructure.SyncService.Shop.Models.InventoryItem.InventoryItem;
 using Location = KavirTire.Shop.Infrastructure.SyncService.Shop.Models.Location;
@@ -50,12 +51,12 @@ namespace KavirTire.Shop.Infrastructure.SyncService.Services
         private readonly IShopRepository<PostCostCategory> _postCostCategoryShopRepo;
 
         private readonly ContactCrmRepository _contactCrmRepo;
-        private readonly IShopRepository<Customer> _customerRepo;
+        private readonly CustomerRepository _customerRepo;
 
         private readonly VehicleCrmRepository _vehicleCrmRepo;
         private readonly IShopRepository<Vehicle> _vehicleShopRepo;
 
-        private readonly IShopRepository<OrderHistory> _orderHistoryRepo;
+        private readonly OrderHistoryRepository _orderHistoryRepo;
         private readonly OrderCrmRepository _orderCrmRepo;
 
         private readonly IShopRepository<WebPage> _webPageShopRepo;
@@ -84,10 +85,10 @@ namespace KavirTire.Shop.Infrastructure.SyncService.Services
             PostCostCategoryCrmRepository postCostCategoryCrmRepo,
             IShopRepository<PostCostCategory> postCostCategoryShopRepo,
             ContactCrmRepository contactCrmRepo,
-            IShopRepository<Customer> customerRepo,
+            CustomerRepository customerRepo,
             VehicleCrmRepository vehicleCrmRepo,
             IShopRepository<Vehicle> vehicleShopRepo,
-            IShopRepository<OrderHistory> orderHistoryRepo,
+            OrderHistoryRepository orderHistoryRepo,
             OrderCrmRepository orderCrmRepos,
             IShopRepository<WebPage> webPageShopRepo,
             WebPageCrmRepository webPageCrmRepo,
@@ -127,6 +128,7 @@ namespace KavirTire.Shop.Infrastructure.SyncService.Services
 
         public async Task Start()
         {
+            logger.Info("Migrating data from CRM to shop");
             var vehicleTypes = await this.SyncVehicleTypes();
             var priceLists = await this.SyncPriceLists();
             await this.SyncGeneralPolicy();
@@ -136,16 +138,21 @@ namespace KavirTire.Shop.Infrastructure.SyncService.Services
             await this.SyncVehicleTypeProducts(products, vehicleTypes);
             await this.SyncPriceListItems(products, priceLists);
             await this.SyncInventoryItems(products);
-            var contacts = await this.SyncContacts();
-            await this.SyncVehicles(contacts);
-            await this.SyncOrderHistory(contacts);
+             await this.SyncContacts();
+            await this.SyncVehicles();
+            await this.SyncOrderHistory();
             await this.SyncWebPages();
             await this.SyncIpgs();
         }
 
         private async Task<List<CRM.Models.VehicleType>> SyncVehicleTypes()
         {
+            logger.Info("SyncVehicleTypes Started.");
+            
             var vehicleTypes = _vehicleTypeCrmRepo.GetActiveVehicleTypes();
+            logger.Info($"Found {vehicleTypes.Count} VehicleTypes.");
+            
+            logger.Info("Updating VehicleTypes.");
             await _vehicleTypeShopRepo.AddOrUpdateRangeAsync(
                 vehicleTypes.Select(vehicleType =>
                     new VehicleType
@@ -153,26 +160,44 @@ namespace KavirTire.Shop.Infrastructure.SyncService.Services
                         Id = vehicleType.Id,
                         Name = vehicleType.Name
                     }));
+            
+            logger.Info("Deleting Obsolete VehicleTypes.");
             await _vehicleTypeShopRepo.DeleteObsoleteRecords(vehicleTypes.Select(v => v.Id.Value).ToList());
+            
+            logger.Info("SyncVehicleTypes Finished.");
             return vehicleTypes;
         }
 
         private async Task<List<CRM.Models.PriceList.PriceList>> SyncPriceLists()
         {
+            logger.Info("SyncPriceLists Started.");
+            
             var priceLists = _priceListCrmRepo.GetActivePriceLists();
+            logger.Info($"Found {priceLists.Count} PriceLists.");
+            
+            logger.Info("Updating PriceLists.");
             await _priceListShopRepo.AddOrUpdateRangeAsync(priceLists.Select(priceList =>
                 new PriceList
                 {
                     Id = priceList.Id,
                     Name = priceList.Name
                 }));
+            
+            logger.Info("Deleting Obsolete PriceLists.");
             await _priceListShopRepo.DeleteObsoleteRecords(priceLists.Select(v => v.Id.Value).ToList());
+            
+            logger.Info("SyncPriceLists Finished.");
             return priceLists;
         }
 
         private async Task SyncGeneralPolicy()
         {
+            
+            logger.Info("SyncGeneralPolicy Started.");
+            
             var generalPolicy = _generalPolicyCrmRepo.GetGeneralPolicy();
+            logger.Info("Updating GeneralPolicy.");
+
             await _generalPolicyShopRepo.AddOrUpdateAsync(new GeneralPolicy
             {
                 Id = generalPolicy.Id,
@@ -188,13 +213,22 @@ namespace KavirTire.Shop.Infrastructure.SyncService.Services
                 BasketExpirationInMin = generalPolicy.ExpireQuoteForCookieMin ?? 100
             });
 
+            logger.Info("Deleting Obsolete GeneralPolicy.");
             await _generalPolicyShopRepo.DeleteObsoleteRecords(new List<Guid>() { generalPolicy.Id });
+            
+            logger.Info("SyncGeneralPolicy Finished.");
+
         }
 
         private async Task SyncLocations()
         {
+            
+            logger.Info("SyncLocations Started.");
+            
             var locations = _locationCrmRepo.GetLocations();
+            logger.Info($"Found {locations.Count} Locations.");
 
+            logger.Info("Updating Locations.");
             await _locationShopRepo.AddOrUpdateRangeAsync(locations.Select(location => new Location
             {
                 Id = location.Id,
@@ -202,31 +236,49 @@ namespace KavirTire.Shop.Infrastructure.SyncService.Services
                 ParentId = location.ParentLocation?.Value?.Id,
                 PostCostCategoryId = location.PostCostCategory?.Value?.Id
             }).ToList());
+            
+            logger.Info("Deleting Obsolete Locations.");
             await _locationShopRepo.DeleteObsoleteRecords(locations.Select(l => l.Id.Value).ToList());
+            
+            logger.Info("SyncLocations Finished.");
         }
 
         private async Task SyncPostCostCategories()
         {
+            logger.Info("SyncPostCostCategories Started.");
+            
             var postCostCategories = _postCostCategoryCrmRepo.GetActivePostCostCategories();
+            logger.Info($"Found {postCostCategories.Count} PostCostCategories.");
 
+            logger.Info("Updating PostCostCategories.");
             await _postCostCategoryShopRepo.AddOrUpdateRangeAsync(postCostCategories.Select(p => new PostCostCategory
             {
                 Id = p.Id,
                 TirePostCost = p.TirePostCost?.Value?.Value
             }));
+            
+            logger.Info("Deleting Obsolete PostCostCategories.");
             await _postCostCategoryShopRepo.DeleteObsoleteRecords(postCostCategories.Select(p => p.Id.Value).ToList());
+            
+            logger.Info("SyncPostCostCategories Finished.");
         }
 
         private async Task<List<CRM.Models.Product>> SyncProducts()
         {
-            var products = _productCrmRepo.GetActiveProducts();
+            
+            logger.Info("SyncProducts Started.");
 
+            var products = _productCrmRepo.GetActiveProducts();
+            logger.Info($"Found {products.Count} Products.");
+            
             var productImageIds = products
                 .Select(p => p.FirstImage.Value?.Id)
                 .Where(id => id != null && id != Guid.Empty)
                 .ToList();
             var productImages = _productCrmRepo.GetProductImages(productImageIds);
-
+            logger.Info($"Found {productImages.Count} ProductImages.");
+            
+            logger.Info($"Updating Shop WebFiles.");
             await _webFileShopRepo.AddOrUpdateRangeAsync(productImages.Select(a => new WebFile
             {
                 Id = a.WebFile.Id,
@@ -234,13 +286,18 @@ namespace KavirTire.Shop.Infrastructure.SyncService.Services
                 Data = a.Data,
                 MimeType = a.MimeType
             }));
+            
+            logger.Info("Deleting Obsolete WebFiles.");
             await _webFileShopRepo.DeleteObsoleteRecords(productImages.Select(a => a.WebFile.Id).ToList());
-
+            
+            logger.Info($"Updating Products.");
             await _productRepo.AddOrUpdateRangeAsync(products.Select(product => new Product
             {
                 Id = product.Id,
                 Name = product.Name
             }).ToList());
+            
+            logger.Info("Deleting Obsolete Products.");
             await _productRepo.DeleteObsoleteRecords(products.Select(v => v.Id.Value).ToList());
 
             await _productImageRepo.AddOrUpdateRangeAsync(productImages
@@ -250,8 +307,13 @@ namespace KavirTire.Shop.Infrastructure.SyncService.Services
                     ProductId = a.Product.Id,
                     ImageUrl = a.PartialUrl != null ? $"/webfile/{a.PartialUrl}" : "/not-found.png"
                 }).ToList());
+            logger.Info("Updating Product Images.");
+            
+            logger.Info("Deleting Obsolete ProductImages.");
             await _productImageRepo.DeleteObsoleteRecords(productImages.Select(i => i.Id).ToList());
-
+            
+            logger.Info("SyncProducts Finished.");
+            
             return products;
         }
 
@@ -259,7 +321,12 @@ namespace KavirTire.Shop.Infrastructure.SyncService.Services
         private async Task SyncVehicleTypeProducts(List<CRM.Models.Product> products,
             List<CRM.Models.VehicleType> vehicleTypes)
         {
+            logger.Info("SyncVehicleTypeProducts Started.");
+            
             var vehicleTypeProducts = _productCrmRepo.GetActiveVehicleTypeProducts();
+            logger.Info($"Found {vehicleTypeProducts.Count} VehicleTypeProducts.");
+
+            logger.Info("Updating VehicleTypeProducts.");
             await _vehicleTypeProductRepo.AddOrUpdateRangeAsync(vehicleTypeProducts
                 .Where(vp =>
                     vehicleTypes.Any(a => a.Id == vp.VehicleType.Value.Id) &&
@@ -271,13 +338,22 @@ namespace KavirTire.Shop.Infrastructure.SyncService.Services
                     VehicleTypeId = v.VehicleType.Value.Id,
                     ProductType = v.Type.Value.Value,
                 }).ToList());
+            
+            logger.Info("Deleting Obsolete VehicleTypeProducts.");
             await _vehicleTypeProductRepo.DeleteObsoleteRecords(vehicleTypeProducts.Select(v => v.Id.Value).ToList());
+            
+            logger.Info("SyncVehicleTypeProducts Finished.");
         }
 
         private async Task SyncPriceListItems(List<CRM.Models.Product> products,
             List<CRM.Models.PriceList.PriceList> priceLists)
         {
+            logger.Info("SyncPriceListItems Started.");
+            
             var priceListItems = _priceListCrmRepo.GetPriceListItems();
+            logger.Info($"Found {priceListItems.Count} PriceListItems.");
+
+            logger.Info("Updating PriceListItems.");
             await _priceListItemShopRepo.AddOrUpdateRangeAsync(priceListItems
                 .Where(pli =>
                     priceLists.Any(a => a.Id == pli.PriceListId.Value.Id) &&
@@ -289,12 +365,22 @@ namespace KavirTire.Shop.Infrastructure.SyncService.Services
                     ProductId = pi.ProductId?.Value?.Id,
                     Amount = Convert.ToInt64(pi.Amount?.Value?.Value)
                 }).ToList());
+            
+            logger.Info("Deleting Obsolete PriceListItems.");
             await _priceListItemShopRepo.DeleteObsoleteRecords(priceListItems.Select(p => p.Id.Value).ToList());
+            
+            logger.Info("SyncPriceListItems Finished.");
+
         }
 
         private async Task SyncInventoryItems(List<CRM.Models.Product> products)
         {
+            logger.Info("SyncInventoryItems Started.");
+            
             var inventoryItems = _productCrmRepo.GetActiveInventoryItems();
+            logger.Info($"Found {inventoryItems.Count} InventoryItems.");
+
+            logger.Info("Updating InventoryItems.");
             await _inventoryItemsRepo
                 .AddOrUpdateRangeAsync(inventoryItems
                     .Where(i => products.Any(a => a.Id == i.Product.Id))
@@ -306,36 +392,55 @@ namespace KavirTire.Shop.Infrastructure.SyncService.Services
                         InventoryForSale = a.InventoryForSale,
                         ReservedInventory = a.ReservedInventory
                     }).ToList());
+            
+            logger.Info("Deleting Obsolete InventoryItems.");
             await _inventoryItemsRepo.DeleteObsoleteRecords(inventoryItems.Select(p => p.Id).ToList());
+            
+            logger.Info("SyncInventoryItems Finished.");
         }
 
-        private async Task<List<Contact>> SyncContacts()
+        private async Task SyncContacts()
         {
-            var contacts = _contactCrmRepo.GetActiveContacts();
+            logger.Info("SyncContacts Started.");
+            
+            logger.Info("Finding last synced Contact/Customer.");
+            var lastUpdatedCustomer = _customerRepo.GetLastUpdatedCustomer();
+            
+            var contacts = _contactCrmRepo.GetActiveContacts(lastUpdatedCustomer?.CrmRowVersion);
+            logger.Info($"Found {contacts.Count} newly Created/Updated Contacts/Customers.");
 
+            
+            logger.Info("Updating Contacts/Customers.");
             await _customerRepo.AddOrUpdateRangeAsync(contacts.Select(c => new Customer
             {
                 Id = c.Id,
                 ProvinceId = c.Province?.Value?.Id,
                 FirstName = c.FirstName,
                 LastName = c.LastName,
+                Username = c.AdxUsername,
                 NationalId = c.NationalId,
                 PostalCode = c.PostalCode,
                 PostalAddress = c.PostalAddress,
                 MobilePhone = c.MobilePhone,
+                CrmRowVersion = c.VersionNumber,
                 IsApprovedForPurchase = c.IsApprovedForPurchase
             }).ToList());
-
-            await _customerRepo.DeleteObsoleteRecords(contacts.Select(c => c.Id.Value).ToList());
-            return contacts;
+            
+            logger.Info("SyncContacts Finished.");
         }
 
 
-        private async Task SyncVehicles(List<Contact> contacts)
+        private async Task SyncVehicles()
         {
-            var vehicles = _vehicleCrmRepo.GetActiveVehicles();
-            vehicles = vehicles.Where(v => contacts.Any(c => c.Id == v.Customer?.Value?.Id)).ToList();
+            logger.Info("SyncVehicles Started.");
 
+            
+            var customers = await _customerRepo.ListAsync();
+            var vehicles = _vehicleCrmRepo.GetActiveVehicles();
+            vehicles = vehicles.Where(v => customers.Any(c => c.Id == v.Customer?.Value?.Id)).ToList();
+            logger.Info($"Found {vehicles.Count} Vehicles.");
+
+            logger.Info("Updating Vehicles.");
             await _vehicleShopRepo.AddOrUpdateRangeAsync(vehicles.Select(v => new Vehicle
             {
                 Id = v.Id,
@@ -346,29 +451,47 @@ namespace KavirTire.Shop.Infrastructure.SyncService.Services
                 RegistrationPlateNumberRight = v.VehicleRegistrationNumberRight,
                 RegistrationPlateCharacter = v.VehicleRegistrationCharacter?.Value?.Value
             }).ToList());
+            
+            logger.Info("Deleting Obsolete Vehicles.");
             await _vehicleShopRepo.DeleteObsoleteRecords(vehicles.Select(c => c.Id.Value).ToList());
+            
+            logger.Info("SyncVehicles Finished.");
         }
 
 
-        private async Task SyncOrderHistory(List<Contact> contacts)
+        private async Task SyncOrderHistory()
         {
-            var orders = _orderCrmRepo.GetAllOrders();
-            orders = orders.Where(v => contacts.Any(c => c.Id == v.Customer?.Value?.Id)).ToList();
+            
+            logger.Info("SyncOrderHistory Started.");
+            
+            logger.Info("Finding last synced OrderHistory.");
+            var lastUpdatedOrderHistory = _orderHistoryRepo.GetLastUpdatedOrderHistory();
+            
+            var orders = _orderCrmRepo.GetAllOrders(lastUpdatedOrderHistory?.CrmRowVersion);
+            logger.Info($"Found {orders.Count} newly Created/Updated Orders.");
 
-            await _orderHistoryRepo.AddOrUpdateRangeAsync(orders.Select(o => new OrderHistory
-            {
-                Id = Guid.NewGuid(),
-                OrderId = o.Id,
-                CustomerId = o.Customer.Value.Id,
-                TotalQuantity = o.TotalQuantity,
-                RegistrationDate = o.RegistrationDate
-            }).ToList());
-            await _orderHistoryRepo.DeleteObsoleteRecords();
+            
+            logger.Info("Updating Contacts/Customers.");
+            await _orderHistoryRepo.AddOrUpdateRangeAsync(
+                orders.Select(o => new OrderHistory
+                {
+                    Id = Guid.NewGuid(),
+                    OrderId = o.Id,
+                    CustomerId = o.Customer.Value.Id,
+                    TotalQuantity = o.TotalQuantity,
+                    RegistrationDate = o.RegistrationDate,
+                    CrmRowVersion = o.VersionNumber
+                }).ToList());
+            
+            logger.Info("SyncOrderHistory Finished.");
         }
 
 
         private async Task SyncWebPages()
         {
+            logger.Info("SyncWebPages Started.");
+            
+            logger.Info($"Syncing SaleInformationContent Page.");
             var saleInformationContent = _webPageCrmRepo.GetSaleInformationContent();
             if (saleInformationContent != null)
             {
@@ -379,14 +502,25 @@ namespace KavirTire.Shop.Infrastructure.SyncService.Services
                     Data = saleInformationContent.CopyHtml ?? ""
                 });
             }
+            
+            logger.Info("SyncWebPages Finished.");
         }
 
 
         private async Task SyncIpgs()
         {
+            
+            logger.Info("SyncIpgs Started.");
+            
+         
+            
+            
+            
             var ipgs = _ipgCrmRepo.GetIpgs();
+            logger.Info($"Found {ipgs.Count} IPGs.");
 
             var bankAccounts = _ipgCrmRepo.GetBankAccounts();
+            logger.Info($"Found {bankAccounts.Count} BankAccounts.");
 
             var ipgsToUpdate = ipgs.Select(item => new Ipg
             {
@@ -407,9 +541,14 @@ namespace KavirTire.Shop.Infrastructure.SyncService.Services
                 DisableToMinute = item.FinishStopMinute
 
             }).ToList();
+            
+            logger.Info($"Updating IPGs.");
             await _ipgShopRepo.AddOrUpdateRangeAsync(ipgsToUpdate);
+            
+            logger.Info($"Deleting Obsolete IPGs.");
             await _ipgShopRepo.DeleteObsoleteRecords(ipgs.Select(c => c.IpgId).ToList());
 
+            logger.Info($"Updating BankAccounts.");
             await _bankAccountShopRepo.AddOrUpdateRangeAsync(
                 bankAccounts
                 .Where(x=>ipgs.Any(i=>i.IpgId == x.Ipg?.Id))
@@ -424,8 +563,12 @@ namespace KavirTire.Shop.Infrastructure.SyncService.Services
                 Iban = x.Iban,
                 ImageUrl = x.ImageUrl != null ? $"/webfile/{x.ImageUrl}" : "/bank.png"
             }).ToList());
+            
+            logger.Info($"Deleting Obsolete BankAccounts.");
             await _bankAccountShopRepo.DeleteObsoleteRecords(bankAccounts.Select(c => c.Id).ToList());
 
+            
+            logger.Info($"Updating BankAccount WebFiles.");
             await _webFileShopRepo.AddOrUpdateRangeAsync(
                 bankAccounts
                 .Where(x => x.Data != null && x.ImageUrl != null && x.MimeType != null)
@@ -436,6 +579,8 @@ namespace KavirTire.Shop.Infrastructure.SyncService.Services
                     Data = x.Data,
                     MimeType = x.MimeType
                 }).ToList());
+            
+            logger.Info("SyncIpgs Finished.");
         }
     }
 }

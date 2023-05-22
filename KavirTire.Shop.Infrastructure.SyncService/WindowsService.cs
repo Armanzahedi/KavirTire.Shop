@@ -19,7 +19,7 @@ namespace KavirTire.Shop.Infrastructure.SyncService
                 string serverPort = ConfigurationManager.AppSettings["APPLICATION_PORT"] ?? "8081";
                 string serverProtocol = ConfigurationManager.AppSettings["APPLICATION_PROTOCOL"] ?? "http";
 
-                string baseAddress = $"{serverProtocol}://*:{serverPort}/";
+                string baseAddress = $"{serverProtocol}://+:{serverPort}/";
                 _webApp = WebApp.Start<Startup>(url: baseAddress);
 
                 logger.Info($"{ConfigurationManager.AppSettings["APPLICATION_NAME"]} is running on port {serverPort}");
