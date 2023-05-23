@@ -38,10 +38,12 @@ public static class ServiceRegistration
         }
         else
         {
-            Console.WriteLine($"---------------------{configuration.GetConnectionString("DefaultConnection")}--------------------");
             services.AddDbContext<AppDbContext>(options =>
+            {
                 options.UseSqlServer(configuration.GetConnectionString("DefaultConnection"),
-                    builder => builder.MigrationsAssembly(typeof(AppDbContext).Assembly.FullName)));
+                    builder => builder.MigrationsAssembly(typeof(AppDbContext).Assembly.FullName));
+                options.UseOpenIddict();
+            });
         }
 
         services.AddScoped(typeof(IReadRepository<>), typeof(CachedRepository<>));

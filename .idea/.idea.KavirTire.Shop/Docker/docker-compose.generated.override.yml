@@ -1,0 +1,19 @@
+# This is a generated file. Not intended for manual editing.
+version: "3.4"
+services:
+  identity-server:
+    build:
+      context: "D:\\Projects\\KavirTire.Shop"
+      dockerfile: "Bmsd.KavirTire.IdentityServer/Dockerfile"
+      target: "base"
+    command: []
+    entrypoint:
+    - "dotnet"
+    - "/app/bin/Debug/net6.0/Bmsd.KavirTire.IdentityServer.dll"
+    environment:
+      ASPNETCORE_STATICWEBASSETS: "/app/bin/Debug/net6.0/Bmsd.KavirTire.IdentityServer.staticwebassets.runtime.CT.json"
+    image: "identity-server:dev"
+    ports: []
+    volumes:
+    - "D:\\Projects\\KavirTire.Shop\\Bmsd.KavirTire.IdentityServer:/app:rw"
+    working_dir: "/app"

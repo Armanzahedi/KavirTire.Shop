@@ -10,8 +10,10 @@ using Serilog;
 using Serilog.Events;
 using Serilog.Ui.MsSqlServerProvider;
 using Serilog.Ui.Web;
+using Microsoft.IdentityModel.Logging;
 
 var builder = WebApplication.CreateBuilder(args);
+IdentityModelEventSource.ShowPII = true;
 
 builder.Host.ConfigureAppConfiguration((hostingContext, config) =>
 {

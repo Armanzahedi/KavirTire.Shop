@@ -26,6 +26,8 @@ services:
   
   nginxexp:
     image: nginx/nginx-prometheus-exporter
+    depends_on:
+      - nginxx
     ports:
       - "9113:9113"
     command:
@@ -48,21 +50,12 @@ services:
     networks:
       - kavirtire
   
-  identity-server:
-    image: identity-server
-    restart: always
-    build:
-      context: .
-      dockerfile: Bmsd.KavirTire.IdentityServer/Dockerfile
-    expose:
-      - "80"
-    depends_on:
-      - redis
-    networks:
-      - kavirtire
   kavirtireshop:
     image: kavirtireshop
     restart: always
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+      - ASPNETCORE_URLS=http://+:80
     build:
       context: .
       dockerfile: KavirTire.Shop.Presentation/Dockerfile
@@ -74,6 +67,7 @@ services:
       - kavirtire
     deploy:
       replicas: 1
+  
   redis:
     image: redis:7
     ports:
@@ -89,9 +83,11 @@ services:
         max-file: "3"
     networks:
       - kavirtire
+
+
+
 networks:
   kavirtire:
     driver: bridge
-
 volumes:
   grafana_data: {}
