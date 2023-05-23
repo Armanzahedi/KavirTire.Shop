@@ -1,0 +1,41 @@
+﻿@using Bmsd.KavirTire.IdentityServer.Models;
+@model LoginViewModel
+<form style="direction:rtl" autocomplete="off" asp-route="Login">
+    @Html.ValidationSummary()
+    <input type="hidden" asp-for="ReturnUrl" />
+    <div class="theme-card">
+        <h3 style="text-align: center;">ورود با حساب کاربری</h3>
+        <div class="form-group">
+            <label for="Username">
+                <span data-languagecontext="فارسی">
+                    <span>نام کاربری</span>
+                </span>
+            </label>
+            <input type="text" class="form-control form-control-lg" placeholder="" asp-for="Username" autofocus>
+        </div>
+        <div class="form-group">
+            <label class="required" for="Password">
+                <span>
+                    رمز عبور
+                </span>
+            </label>
+            <input type="password" class="form-control form-control-lg form-control-last" placeholder="" asp-for="Password">
+        </div>
+        <div class="form-group">
+            <a style="font-size:14px" class="btn" role="button" href="/fa-IR/Account/Login/ForgotPassword" title="بازیابی کلمه عبور">بازیابی کلمه عبور</a>
+
+            <div class="checkbox remember-me">
+                <label>
+                    <span style="font-size:14px">مرا به یاد داشته باش</span>
+                </label>
+                <input type="checkbox" data-val="true" data-val-required="The RememberMe field is required." id="RememberMe" asp-for="RememberMe">
+            </div>
+        </div>
+        <div class="">
+            <a style="font-size:13px" class="btn" role="button" href="~/fa-IR/SignIn?returnUrl=/fa-ir" title="ایجاد حساب کاربری جدید">ایجاد حساب کاربری جدید</a>
+        </div>
+    </div>
+    <p>
+        <button type="submit" class="btn btn-dark btn-block mt-3">ورود</button>
+    </p>
+</form>

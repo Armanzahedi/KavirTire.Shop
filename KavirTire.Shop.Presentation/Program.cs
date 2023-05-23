@@ -13,6 +13,13 @@ using Serilog.Ui.Web;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Host.ConfigureAppConfiguration((hostingContext, config) =>
+{
+    var environment = hostingContext.HostingEnvironment;
+    Console.WriteLine($"This is the current environment: {environment}");
+    config.AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
+    config.AddJsonFile($"appsettings.{environment.EnvironmentName}.json", optional: true, reloadOnChange: true);
+});
 
 var logger = new LoggerConfiguration()
     .ReadFrom.Configuration(builder.Configuration)
@@ -66,15 +73,6 @@ builder.Services.Configure<ForwardedHeadersOptions>(options =>
 
 
 builder.Services.AddKavirAuthentication(builder.Configuration);
-
-var cookieDomain = builder.Configuration.GetValue<string?>("Authentication:CookieDomain");
-if(cookieDomain != null)
-{
-    builder.Services.ConfigureApplicationCookie(options =>
-    {
-        options.Cookie.Domain = cookieDomain;
-    });
-}
 
 var app = builder.Build();
 
