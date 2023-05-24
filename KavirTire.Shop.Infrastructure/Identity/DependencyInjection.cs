@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using OpenIddict.Abstractions;
 
 namespace KavirTire.Shop.Infrastructure.Identity;
 
@@ -15,17 +16,13 @@ public static class DependencyInjection
                 options.DefaultSignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
                 options.DefaultChallengeScheme = OpenIdConnectDefaults.AuthenticationScheme;
             })
-            .AddCookie(options =>
-            {
-                options.Cookie.Name = "KavirTireShop.AuthCookie";
-                options.Cookie.SameSite = Microsoft.AspNetCore.Http.SameSiteMode.None;
-            })
+            .AddCookie()
             .AddOpenIdConnect(options =>
             {
                 options.Authority = configuration["Authentication:Authority"];
                 options.ClientId = configuration["Authentication:ClientId"];
                 options.ClientSecret = configuration["Authentication:ClientSecret"];
-                options.ResponseType = "code";
+                options.ResponseType = OpenIddictConstants.ResponseTypes.IdToken;
                 options.CallbackPath = "/signin-oidc";
                 options.SaveTokens = true;
                 options.RequireHttpsMetadata = false;

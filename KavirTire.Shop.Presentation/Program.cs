@@ -74,17 +74,11 @@ builder.Services.Configure<ForwardedHeadersOptions>(options =>
 });
 
 
-builder.Services.AddKavirAuthentication(builder.Configuration);
+builder.Services.AddKavirAuthentication(builder.Configuration); 
 
 var app = builder.Build();
 
-app.UseCookiePolicy(new CookiePolicyOptions()
-{
-    MinimumSameSitePolicy = SameSiteMode.None,
-    Secure = CookieSecurePolicy.Always
-});
-
-// Configure the HTTP request pipeline.
+// // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -92,13 +86,26 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseWebOptimizer();
-// app.UseHttpsRedirection();
+app.UseHttpsRedirection();
 
 
 app.UseStaticFiles();
 app.UseRouting();
 
 app.UseForwardedHeaders();
+
+
+
+app.Use((ctx, nxt) =>
+{
+    var containStr = "Correlation";
+    foreach (var key in ctx.Request.Cookies.Keys)
+    {
+        if (key.ToLower().Contains(containStr.ToLower()))
+            Console.WriteLine("A");
+    }
+    return nxt.Invoke();
+});
 app.UseAuthentication();
 app.UseAuthorization();
 
@@ -140,4 +147,6 @@ using (var scope = app.Services.CreateScope())
 
 app.UseWebFileHandler();
 app.StartRecurringJobs();
+
+
 app.Run();

@@ -19,12 +19,21 @@ public class AccountController : BaseController
     [AllowAnonymous]
     public async Task<IActionResult> Callback()
     {
-        var result = await HttpContext.AuthenticateAsync(CookieAuthenticationDefaults.AuthenticationScheme);
-        if (result?.Succeeded == true)
+        try
         {
-            return RedirectToAction("Index", "Home");
+            var result = await HttpContext.AuthenticateAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            if (result?.Succeeded == true)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            return RedirectToAction("Login");
         }
-        return RedirectToAction("Login");
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
+   
     }
     public async Task<IActionResult> Logout()
     {
